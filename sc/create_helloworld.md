@@ -68,9 +68,9 @@ public class Controller {
 
 ## 어플리케이션 실행 
 - 아래 순서대로 어플리케이션 실행 설정을 합니다.
-![setup run1](./images/setup_run1.png)
-![setup run1](./images/setup_run2.png)
-![setup run1](./images/setup_run3.png)
-![setup run1](./images/setup_run4.png)
-![setup run1](./images/setup_run5.png)
+    - ![setup run1](./images/setup_run1.png)
+    - ![setup run1](./images/setup_run2.png)
+    - ![setup run1](./images/setup_run3.png)
+    - ![setup run1](./images/setup_run4.png)
+    - ![setup run1](./images/setup_run5.png)
 
