@@ -113,3 +113,22 @@ spring.cloud.config.enabled=false
 ![env3](./images/env3.png)
 ![env4](./images/env4.png)
 
+## application.yml로 변경 
+- application.properties파일은 중복된 텍스트가 많은 경우 불편하므로 보통 yaml파일로 바꿉니다. 
+> **💡 Tip:** 
+> YAML: Yaml Aren't Markup Language \
+> 무언가의 설정을 정의할 때 많이 사용하는 파일형식 \
+> 키와 값 사이에 콜론으로 구분하며 값은 콜론 뒤에 스페이스 1개 필수 \
+> 인덴테이션은 스페이스바 또는 탭을 사용하고 섞어 쓸 수 없음 \
+> 대부분 스페이스로 인덴테이션을 함 
+
+![toyaml1](./images/toyaml1.png)
+![toyaml2](./images/toyaml2.png)
+```
+spring:
+  application:
+    name: helloworld
+  cloud.config.enabled: false
+```
+
+
