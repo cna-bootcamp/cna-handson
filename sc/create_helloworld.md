@@ -66,11 +66,29 @@ public class Controller {
 }
 ```
 
+- application.properties파일을 수정합니다. 
+아직 Config서버와 연동 안하므로 spring.cloud.config.enabled=false를 추가합니다. 
+![dev](./images/dev1.png)
+```
+spring.application.name=helloworld
+spring.cloud.config.enabled=false
+```
+
+
 ## 어플리케이션 실행 
 - 아래 순서대로 어플리케이션 실행 설정을 합니다.
-    - ![setup run1](./images/setup_run1.png)
-    - ![setup run1](./images/setup_run2.png)
-    - ![setup run1](./images/setup_run3.png)
-    - ![setup run1](./images/setup_run4.png)
-    - ![setup run1](./images/setup_run5.png)
+    - 메인메뉴에서 실행환경 설정창 열기
+    ![setup run1](./images/setup_run1.png)
+    - Gradle 선택
+    ![setup run2](./images/setup_run2.png)
+    - 어플리케이션 실행 설정: ':bootRun'만 선택하면 됨
+    ![setup run3](./images/setup_run3.png)
+    - 하단에 있는 창에서 'Service'버튼 클릭하고 '+'아이콘을 눌러 실행유형 선택 
+    ![setup run4](./images/setup_run4.png)
+    - 'Gradle'을 실행유형으로 선택  
+    ![setup run5](./images/setup_run5.png)
+    - 실행환경 프로파일이 나타남  
+    ![setup run6](./images/setup_run6.png)
 
+- 어플리케이션을 실행 합니다.
+![run1](./images/run1.png)
