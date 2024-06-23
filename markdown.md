@@ -3,13 +3,16 @@
 ::: tip CloudPak이란? 
 **CloudPak**은 IBM의 Total cloud platform 제품군입니다.
 아래와 같이 구성되어 있습니다.
-- CloudPak for Application
-- CloudPak for Multicloud Management
-- CloudPak for Integration
-- CloudPak for Data
-- CloudPak for Automation
-- CloudPak for Security
+1. CloudPak for Application
+2. CloudPak for Multicloud Management
+3. CloudPak for Integration
+    - CloudPak for Data
+    - CloudPak for Automation
+    - CloudPak for Security
 
+
+
+## 수평선 
 ---
 
 ## Block 메시지2
@@ -19,7 +22,7 @@
     - 나이: _50_ \
     - 특기: _놀고먹기_ 
 
-*** 
+---
 
 ## URL link 
 [다음](http://www.daum.net)
@@ -27,7 +30,7 @@
 ## 이미지 
 ![kubepia](https://kubepia.github.io/assets/img/kubepia.png)
 
-___
+---
 
 ## Source code
 ```
