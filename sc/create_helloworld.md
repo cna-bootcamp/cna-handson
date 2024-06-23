@@ -11,6 +11,14 @@
 - IntelliJ를 실행하고 [File]-[Open]을 클릭한 후 helloworld디렉토리를 선택함\
 ![open](./images/create_project3.png)
 
+- Spring Boot 어플리케이션은 구조 입니다. \
+| 구조 | 설명 |
+|:------------------------|:--------------|
+|![structure](./images/springboot_structure.png)| 
+- src/main/java: 클래스를 이 디렉토리 밑에 구현함 \
+- src/main/resources: 어플리케이션 설정 파일 위치 |
+
+
 # 어플리케이션 개발
 - build.gradle을 열고 아래와 같이 java 버전 부분을 수정함. 리마크 부분은 삭제하세요.
 ```
