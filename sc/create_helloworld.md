@@ -114,7 +114,9 @@ spring.cloud.config.enabled=false
 ![env4](./images/env4.png)
 
 ## application.yml로 변경 
-- application.properties파일은 중복된 텍스트가 많은 경우 불편하므로 보통 yaml파일로 바꿉니다. 
+- application.properties파일은 중복된 텍스트가 많은 경우 불편하므로 보통 yaml파일로 바꿉니다. \
+Java에서는 확장자로 'yaml'이 아닌 'yml'을 보통 사용함. 'yaml'로 해도 정상 동작함 
+
 > **💡 Tip:** 
 > YAML: Yaml Aren't Markup Language \
 > 무언가의 설정을 정의할 때 많이 사용하는 파일형식 \
