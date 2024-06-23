@@ -29,17 +29,19 @@ java {
 - 웹으로 요청을 받을 클래스를 생성 \
 ![add class](./images/add_class.png)
 
-- 클래스 개발 
+- 클래스 개발 \
+'/greeting/'뒤에 인사말을 지정하면 화면에 환경변수 'user_nickname'과 인사말을 표시함 \
+
 ```
-@RestController
+@RestController    //Rest API를 처리하는 Bean클래스로 지정함
 @RefreshScope      //Config서버와 연동하여 동적갱신이 가능한 Bean클래스로 만듦
 public class Controller {
-    @Value("${greeting:Hi}")
-    private String greeting;
+    @Value("${user_nickname:온달}")  //환경변수 user_nickname값을 읽고 없으면 '온달'로 값을 리턴
+    private String userNickname;    //@Value에서 리턴한 값을 userNickname변수로 받음
 
-    @GetMapping("/greeting/{message}")
-    public String echo(@PathVariable String message) {
-        return greeting + " => " + message;
+    @GetMapping("/greeting/{message}")  //메소드가 Get이고 URI는 '/greeting/'뒤에 어떤 값이 있다고 지정함
+    public String echo(@PathVariable String message) {  //echo라는 메소드는 파라미터로 URI경로에 있는 message값을 받음
+        return userNickname + "님! " + message;  //Client에 값을 리턴함 
     }
 }
 ```
@@ -54,15 +56,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController    //Rest API를 처리하는 Bean클래스로 지정함
 @RefreshScope      //Config서버와 연동하여 동적갱신이 가능한 Bean클래스로 만듦
 public class Controller {
-    @Value("${greeting:Hi}")
-    private String greeting;
+    @Value("${user_nickname:온달}")  //환경변수 user_nickname값을 읽고 없으면 '온달'로 값을 리턴
+    private String userNickname;    //@Value에서 리턴한 값을 userNickname변수로 받음
 
-    @GetMapping("/greeting/{message}")
-    public String echo(@PathVariable String message) {
-        return greeting + " => " + message;
+    @GetMapping("/greeting/{message}")  //메소드가 Get이고 URI는 '/greeting/'뒤에 어떤 값이 있다고 지정함
+    public String echo(@PathVariable String message) {  //echo라는 메소드는 파라미터로 URI경로에 있는 message값을 받음
+        return userNickname + "님! " + message;  //Client에 값을 리턴함 
     }
 }
 ```
@@ -93,4 +95,20 @@ spring.cloud.config.enabled=false
 
 - 어플리케이션을 실행 합니다. \
 ![run1](./images/run1.png)
+
+- 실행결과 확인: Tomcat서버가 실행되었고 포트가 '8080'인것을 확인 \
+![run2](./images/run2.png)
+
+## 어플리케이션 테스트 
+- 웹브라우저에서 'http://localhost:8080/greeting/반갑습니다.' 라고 입력합니다. 맨 뒤의 인사말은 바꾸셔도 됩니다. \
+![test1]](./images/test1.png)
+
+## 환경변수 지정 및 재실행 
+- Controller클래스에서 읽는 user_nickname 환경변수를 셋팅합니다. \
+![env1]](./images/env1.png)
+![env2]](./images/env2.png)
+
+- 어플리케이션을 재시작 하고, 웹브라우저에서 테스트 해봅니다. \
+![env3]](./images/env3.png)
+
 
