@@ -10,7 +10,9 @@
     - CloudPak for Automation
     - CloudPak for Security
 
-
+<div style="background-color: #f4f4f4; border-left: 6px solid #1E88E5; padding: 10px;">
+  <p><strong>Note:</strong> 주의사항을 나타내는 내용을 여기에 작성합니다.</p>
+</div>
 
 ## 수평선 
 ---
