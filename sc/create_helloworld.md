@@ -11,12 +11,24 @@
 - IntelliJ를 실행하고 [File]-[Open]을 클릭한 후 helloworld디렉토리를 선택함\
 ![open](./images/create_project3.png)
 
-- Spring Boot 어플리케이션은 구조 입니다. \
-| 구조 | 설명 |
-|:------------------------|:--------------|
-|![structure](./images/springboot_structure.png)| 
-- src/main/java: 클래스를 이 디렉토리 밑에 구현함 \
-- src/main/resources: 어플리케이션 설정 파일 위치 |
+- Spring Boot 어플리케이션은 구조 입니다. 
+![stru](./images/springboot_structure.png)
+| 디렉토리/파일                          | 설명                                                                                                  |
+|---------------------------------------|-------------------------------------------------------------------------------------------------------|
+| `src/main/java`                       | 애플리케이션의 주요 자바 소스 코드가 위치하는 디렉토리                                                                |
+| ├── `HellowworldApplication.java`                | 애플리케이션의 메인 클래스로, `@SpringBootApplication` 어노테이션이 붙어있음. 클래스명은 {어플리케이션명}Application.java임                                              |
+| ├── `controller`                      | REST API 엔드포인트, 요청 처리 로직 등을 담당하는 컨트롤러 클래스들이 위치한 패키지                                                 |
+| ├── `model`                           | 데이터 모델, 도메인 객체 등을 정의하는 클래스들이 위치한 패키지                                                                  |
+| ├── `repository`                      | 데이터베이스 액세스를 담당하는 리포지토리 인터페이스 또는 클래스들이 위치한 패키지                                                      |
+| └── `service`                         | 비즈니스 로직을 구현하는 서비스 클래스들이 위치한 패키지                                                                       |
+| `src/main/resources`                  | 애플리케이션에 필요한 정적 리소스 파일들이 위치하는 디렉토리                                                               |
+| ├── `application.properties` 또는 `.yml` | 애플리케이션의 설정 정보를 담고 있는 파일                                                                           |
+| ├── `static`                          | 정적 파일(HTML, CSS, JavaScript 등)이 위치하는 디렉토리                                                         |
+| └── `templates`                       | 동적으로 생성되는 HTML 템플릿 파일(Thymeleaf, FreeMarker 등)이 위치하는 디렉토리                                         |
+| `src/test/java`                       | 애플리케이션의 단위 테스트, 통합 테스트 등을 위한 테스트 코드가 위치하는 디렉토리                                                 |
+| `build.gradle` 또는 `pom.xml`           | 프로젝트의 빌드 설정 및 의존성 관리를 위한 파일. Gradle 또는 Maven을 사용하는지에 따라 파일명이 다름                                 |
+| `gradlew` 또는 `mvnw`                  | Gradle 또는 Maven Wrapper 스크립트 파일로, 어플리케이션 컴파일과 실행 등에 사용하는 명령어임                               |
+
 
 
 # 어플리케이션 개발
