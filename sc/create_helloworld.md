@@ -101,14 +101,14 @@ spring.cloud.config.enabled=false
 
 ## 어플리케이션 테스트 
 - 웹브라우저에서 'http://localhost:8080/greeting/반갑습니다.' 라고 입력합니다. 맨 뒤의 인사말은 바꾸셔도 됩니다. \
-![test1]](./images/test1.png)
+![test1](./images/test1.png)
 
 ## 환경변수 지정 및 재실행 
 - Controller클래스에서 읽는 user_nickname 환경변수를 셋팅합니다. \
-![env1]](./images/env1.png)
-![env2]](./images/env2.png)
+![env1](./images/env1.png)
+![env2](./images/env2.png)
 
 - 어플리케이션을 재시작 하고, 웹브라우저에서 테스트 해봅니다. \
-![env3]](./images/env3.png)
+![env3](./images/env3.png)
 
 
