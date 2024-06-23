@@ -49,12 +49,12 @@ java {
 ![add class1](./images/addclass1.png)
 ![add class2](./images/addclass2.png)
 
-- 웹으로 요청을 받을 클래스를 controller패키지 밑에 생성 \
+- 웹으로 요청 받을 클래스를 controller패키지 밑에 생성 \
 ![add class3](./images/addclass3.png)
 ![add class4](./images/addclass4.png)
 
 - 클래스 개발 \
-'/greeting/'뒤에 인사말을 지정하면 화면에 환경변수 'user_nickname'과 인사말을 표시함 \
+'/greeting/'뒤에 인사말을 지정하면 화면에 환경변수 'user_nickname'과 인사말을 표시함 
 
 ```
 @RestController    //Rest API를 처리하는 Bean클래스로 지정함
@@ -103,17 +103,22 @@ spring.cloud.config.enabled=false
 
 
 ## 어플리케이션 실행 
-- 아래 순서대로 어플리케이션 실행 설정을 합니다.\
+- 아래 순서대로 어플리케이션 실행 설정을 합니다.
     - 메인메뉴에서 실행환경 설정창 열기 \
     ![setup run1](./images/setup_run1.png)
+    
     - Gradle 선택 \
     ![setup run2](./images/setup_run2.png)
+    
     - 어플리케이션 실행 설정: ':bootRun'만 선택하면 됨 \
     ![setup run3](./images/setup_run3.png)
+
     - 하단에 있는 창에서 'Service'버튼 클릭하고 '+'아이콘을 눌러 실행유형 선택 \ 
     ![setup run4](./images/setup_run4.png)
+    
     - 'Gradle'을 실행유형으로 선택 \ 
     ![setup run5](./images/setup_run5.png)
+    
     - 실행환경 프로파일이 나타남  \
     ![setup run6](./images/setup_run6.png)
 
