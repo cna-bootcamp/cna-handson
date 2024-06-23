@@ -187,4 +187,19 @@ spring:
   cloud.config.enabled: false
 ```
 
+## 참고
+- 실행파일인 jar 파일을 만들려면 아래 명령 사용 \
+실행파일은 build/libs디렉토리 밑에 생성됨 
+
+![build1](./images/build1.png)
+```
+./gradlew :build
+```
+
+- jar 파일명을 바꾸려면 build.gradle파일에 아래와 같이 지정하면 됨 
+```
+bootJar {
+	archiveFileName = "helloworld.jar"
+}
+```
 
