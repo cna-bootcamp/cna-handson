@@ -66,8 +66,7 @@ public class Controller {
 }
 ```
 
-- application.properties파일을 수정합니다. 
-아직 Config서버와 연동 안하므로 spring.cloud.config.enabled=false를 추가합니다. 
+- application.properties파일을 수정합니다. 아직 Config서버와 연동 안하므로 spring.cloud.config.enabled=false를 추가합니다. 
 ![dev](./images/dev1.png)
 ```
 spring.application.name=helloworld
