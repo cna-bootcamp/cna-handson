@@ -1,13 +1,13 @@
 # Spring Boot Application 개발
 
 # 새로운 프로젝트 생성
-- http://start.spring.io를 열고 아래와 같이 새로운 프로젝트 셋업을 한 후 [Generate]버튼을 눌러 압축파일을 다운로드 함
+- http://start.spring.io를 열고 아래와 같이 새로운 프로젝트 셋업을 한 후 [Generate]버튼을 눌러 압축파일을 다운로드 함 \
 ![initialize](./images/create_project.png)
 
-- 다운로드한 압축파일을 작업영역 디렉토리에 압축해제 함
+- 다운로드한 압축파일을 작업영역 디렉토리에 압축해제 함 \
 ![extract](./images/create_project2.png)
 
-- IntelliJ를 실행하고 [File]-[Open]을 클릭한 후 helloworld디렉토리를 선택함
+- IntelliJ를 실행하고 [File]-[Open]을 클릭한 후 helloworld디렉토리를 선택함\
 ![open](./images/create_project3.png)
 
 # 어플리케이션 개발
