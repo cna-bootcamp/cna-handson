@@ -117,6 +117,9 @@ spring.cloud.config.enabled=false
 - application.properties파일은 중복된 텍스트가 많은 경우 불편하므로 보통 yaml파일로 바꿉니다. \
 Java에서는 확장자로 'yaml'이 아닌 'yml'을 보통 사용함. 'yaml'로 해도 정상 동작함 
 
+![toyaml1](./images/toyaml1.png)
+![toyaml2](./images/toyaml2.png)
+
 > **💡 Tip:** 
 > YAML: Yaml Aren't Markup Language \
 > 무언가의 설정을 정의할 때 많이 사용하는 파일형식 \
@@ -124,8 +127,6 @@ Java에서는 확장자로 'yaml'이 아닌 'yml'을 보통 사용함. 'yaml'로
 > 인덴테이션은 스페이스바 또는 탭을 사용하고 섞어 쓸 수 없음 \
 > 대부분 스페이스로 인덴테이션을 함 
 
-![toyaml1](./images/toyaml1.png)
-![toyaml2](./images/toyaml2.png)
 ```
 spring:
   application:
