@@ -36,7 +36,9 @@
 ---
 
 ## URL link 
-[다음](http://www.daum.net){:target="_blank"}
+[다음](http://www.daum.net)
+<a href="http://www.daum.net" target="_blank">다음</a>
+
 
 ## 이미지 
 ![kubepia](https://kubepia.github.io/assets/img/kubepia.png)
