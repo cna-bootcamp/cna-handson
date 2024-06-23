@@ -36,8 +36,8 @@
 ---
 
 ## URL link 
-[다음](http://www.daum.net) 
-[<a href="http://www.daum.net" target="_blank">]다음[</a>]
+- [다음](http://www.daum.net) 
+- <a href="http://www.daum.net" target="_blank">다음</a>
 
 
 ## 이미지 
