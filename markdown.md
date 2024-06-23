@@ -1,6 +1,6 @@
 
 ## Block 메시지1
-**CloudPak**은 IBM의 Total cloud platform 제품군입니다.
+**CloudPak**은 IBM의 Total cloud platform 제품군입니다. 
 아래와 같이 구성되어 있습니다.
 1. CloudPak for Application
 2. CloudPak for Multicloud Management
