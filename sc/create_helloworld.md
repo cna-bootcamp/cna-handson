@@ -11,8 +11,7 @@
 - IntelliJ를 실행하고 [File]-[Open]을 클릭한 후 helloworld디렉토리를 선택함\
 ![open](./images/create_project3.png)
 
-- Spring Boot 어플리케이션은 구조 입니다. \
-![stru](./images/springboot_structure.png)
+- Spring Boot 어플리케이션은 구조 입니다. 
 
 | 디렉토리/파일                          | 설명                                                                                                  |
 |---------------------------------------|-------------------------------------------------------------------------------------------------------|
@@ -46,9 +45,13 @@ java {
 	sourceCompatibility = '17'
 }
 ```
+- 'controller' 패키지 생성 \
+![add class1](./images/addclass1.png)
+![add class2](./images/addclass2.png)
 
-- 웹으로 요청을 받을 클래스를 생성 \
-![add class](./images/add_class.png)
+- 웹으로 요청을 받을 클래스를 controller패키지 밑에 생성 \
+![add class3](./images/addclass3.png)
+![add class4](./images/addclass4.png)
 
 - 클래스 개발 \
 '/greeting/'뒤에 인사말을 지정하면 화면에 환경변수 'user_nickname'과 인사말을 표시함 \
@@ -69,7 +72,7 @@ public class Controller {
 
 - 컴파일 에러가 없어질 때까지 라이브러리를 import합니다. 최종 소스는 아래와 같습니다. 
 ```
-package com.cna.helloworld;
+package com.cna.controller.helloworld;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
