@@ -11,7 +11,7 @@
 - IntelliJ를 실행하고 [File]-[Open]을 클릭한 후 helloworld디렉토리를 선택함\
 ![open](./images/create_project3.png)
 
-- Spring Boot 어플리케이션은 구조 입니다. 
+- Spring Boot 어플리케이션은 구조 입니다. \
 ![stru](./images/springboot_structure.png)
 
 | 디렉토리/파일                          | 설명                                                                                                  |
