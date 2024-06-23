@@ -12,7 +12,7 @@
 ![open](./images/create_project3.png)
 
 # 어플리케이션 개발
-- build.gradle을 열고 아래와 같이 java 버전 부분을 수정함. 리마크 부분은 삭제하세요. \ 
+- build.gradle을 열고 아래와 같이 java 버전 부분을 수정함. 리마크 부분은 삭제하세요.
 ```
 /*
 java {
@@ -29,7 +29,7 @@ java {
 - 웹으로 요청을 받을 클래스를 생성 \
 ![add class](./images/add_class.png)
 
-- 클래스 개발 \
+- 클래스 개발 
 ```
 @RestController
 @RefreshScope      //Config서버와 연동하여 동적갱신이 가능한 Bean클래스로 만듦
@@ -44,7 +44,7 @@ public class Controller {
 }
 ```
 
-- 컴파일 에러가 없어질 때까지 라이브러리를 import합니다. 최종 소스는 아래와 같습니다. \
+- 컴파일 에러가 없어질 때까지 라이브러리를 import합니다. 최종 소스는 아래와 같습니다. 
 ```
 package com.cna.helloworld;
 
@@ -93,3 +93,4 @@ spring.cloud.config.enabled=false
 
 - 어플리케이션을 실행 합니다. \
 ![run1](./images/run1.png)
+
