@@ -1,37 +1,12 @@
 
 ## 목차
-- [Block 메시지1](#Block-메시지1)
-- [Block 메시지2](#Block-메시지2)
 - [URL link](#URL-link)
 - [이미지](#이미지)
 - [Source code](#Source-code)
-- [Table](#Table)
 - [Tip](#Tip)
-
----
-
-## Block 메시지1
-**CloudPak**은 IBM의 Total cloud platform 제품군입니다. 
-아래와 같이 구성되어 있습니다.
-1. CloudPak for Application
-2. CloudPak for Multicloud Management
-3. CloudPak for Integration
-    - CloudPak for Data
-    - CloudPak for Automation
-    - CloudPak for Security
-
-| [Top](#목차) |
-
----
-
-## Block 메시지2
-> **저작자 소개** \
-    - 성별: 남 \
-    - 이름: _이해경_ \
-    - 나이: _50_ \
-    - 특기: _놀고먹기_ 
-
-| [Top](#목차) |
+- [Table](#Table)
+- [Block 메시지1](#Block-메시지1)
+- [Block 메시지2](#Block-메시지2)
 
 ---
 
@@ -56,6 +31,14 @@ node_js:
 
 | [Top](#목차) |
 
+## Tip
+> **💡 Tip:** 
+> 팁이나 주의사항을 나타내는 내용을 여기에 작성합니다.\
+> 인용 블록과 볼드체를 사용하여 강조할 수 있습니다.
+
+| [Top](#목차) |
+
+
 ## Table
 | No | Task | Description |
 |:---|:--------------------------|:-----------------------------------|
@@ -65,9 +48,26 @@ node_js:
 
 | [Top](#목차) |
 
-## Tip
-> **💡 Tip:** 
-> 팁이나 주의사항을 나타내는 내용을 여기에 작성합니다.\
-> 인용 블록과 볼드체를 사용하여 강조할 수 있습니다.
+## Block 메시지1
+**CloudPak**은 IBM의 Total cloud platform 제품군입니다. 
+아래와 같이 구성되어 있습니다.
+1. CloudPak for Application
+2. CloudPak for Multicloud Management
+3. CloudPak for Integration
+    - CloudPak for Data
+    - CloudPak for Automation
+    - CloudPak for Security
 
 | [Top](#목차) |
+
+---
+
+## Block 메시지2
+> **저작자 소개** \
+    - 성별: 남 \
+    - 이름: _이해경_ \
+    - 나이: _50_ \
+    - 특기: _놀고먹기_ 
+
+| [Top](#목차) |
+
