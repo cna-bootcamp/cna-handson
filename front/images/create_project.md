@@ -184,7 +184,7 @@ npx create-react-app subride-front
     > **컴포넌트 간 변수와 함수 전달**    
     > AppRoute 컴포넌트를 호출하면서 파라미터로 user객체와 handleAfterLogin함수를 전달하고 있음    
     > 이렇게 각 컴포넌트 간에 파라미터로 변수와 함수를 전달함    
-    
+
 
   - 모듈 Export: 다른 모듈에서 쓸 수 있도록 외부에 모듈을 공개함   
     ```
@@ -206,3 +206,62 @@ npx create-react-app subride-front
 
 ## Git 업로드  
 소스를 Git저장소에 업로드함   
+
+- [GitHub](https://www.github.com)를 로그인: 가입한 ID/PW로 로그인    
+- Git Repository 생성   
+  - 좌측 상단의 [New]버튼 클릭   
+  ![alt text](image-4.png)    
+  - 레포지토리 이름만 'subride-front'로 지정하고, 나머지는 디폴트 값으로 함   
+  ![alt text](image-5.png)
+  - 하단의 [Create repository]눌러 생성   
+  - 레포지토리 주소 복사    
+  ![alt text](image-6.png)   
+
+- 소스 업로드    
+  - vscode 에서 터미널 오픈    
+  ![alt text](image-7.png)   
+  - 'Git Bash' 터미널로 다시 오픈   
+  ![alt text](image-8.png)   
+  - 최초로 Git을 사용하는 경우 user.name, user.email 지정(**본인걸로 변경**)       
+  ```
+  git config --global user.name "온달"
+  git config --global user.email hiondal@gmail.com
+  ```
+  > **Tip: 클립보드 내용 붙여넣기**: 우측 마우스 버튼을 누르면 붙여넣기 됨    
+
+
+  - PC에 로컬 Git Repository 생성   
+  ```
+  git init 
+  ```
+
+  - 로컬 Git Repository의 브랜치 'main'생성 및 이동
+  ```
+  git checkout -B main
+  ``` 
+
+  - 로컬 Git Repository와 서버 Git Repository 연결   
+  서버 Git Repository 주소는 **본인 걸로 바꿔야 함**   
+  ```
+  git remote add origin https://github.com/hiondal/subride-front.git 
+  ```
+  > **명령 의미**: 원격 저장소의 별명을 origin으로 하고 origin의 실제 주소를 지정하는 것임   
+  
+  - 원격 저장소에 푸시: commit 메시지는 적절히 바꿔세요     
+  ```
+  git add . && git commit -m "기본 구조 작성" && git push -u origin main 
+  ```
+  > **명령 의미**    
+  > git add . : 현재 디렉토리와 하위의 모든 파일을 로컬 Git Repository의 푸시 공간에 Add   
+  > git commit -m: 푸시할 파일의 변경사항에 대한 주석    
+  > git push -u origin main: origin별명을 가지는 원격 저장소에 로컬의 main 브랜치 소스를 업로드  
+
+  > **GitHub ID와 암호 지정**    
+  > 최초 푸시할 때는 ID와 암호를 물어봄   
+  > ID는 GitHub의 회원ID이고, 암호는 인증토큰임(로그인 암호 아님)   
+  > 인증 토큰은 로컬 개발 환경 구성 시 만든것을 이용하고,    
+  > 안 만들었거나 잊어 버렸으면 이 [링크](https://firstquarter.tistory.com/entry/Git-%ED%86%A0%ED%81%B0-%EC%9D%B8%EC%A6%9D-%EB%A1%9C%EA%B7%B8%EC%9D%B8-remote-Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead)를 참고하여 다시 만들면 됨   
+
+  - GitHub 페이지에서 리프레시를 하여 업로드 확인    
+
+  
