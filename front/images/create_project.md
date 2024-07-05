@@ -94,7 +94,7 @@ npx create-react-app subride-front
 
 - index.css 파일 내용 복사
 
-- App.js 파일 내용 복사: 앱의 메일 프로그램임     
+- App.js 파일 내용 복사: 앱의 메인 프로그램임     
   - react라이브러리: React의 가장 기본 라이브러리   
     React에서 라이브러리를 import할 때는 import <모듈명> from <라이브러리명>으로 함   
     react라이브러리안의 useState, useEffect, useCallback이라는 모듈을 불러들임   
@@ -113,14 +113,14 @@ npx create-react-app subride-front
 
   - 개발한 모듈 import: 개발한 모듈도 유사하게 import할 수 있음     
     useAuthCheck: 인증 토큰이 유효한지와 재갱신처리를 담당하는 모듈  
-    routes: 페이지간 라우팅을 정의한 모듈. 'routes/index'인데 index를 생략하면 index.js가 불려짐   
+    routes: 컴포넌트간 라우팅을 정의한 모듈. 'routes/index'인데 index를 생략하면 index.js가 불려짐   
     ```
     import useAuthCheck from "utils/useAuthCheck";
     import AppRoutes from "routes";
     ```  
 
-  - useState모듈: 페이지의 다른 객체의 변화가 있을 때 자신의 데이터를 동적으로 변경할 때 사용    
-    페이지의 다른 객체의 변화는 useEffect모듈로 감지하고 자신의 데이터 객체명을 앞에, 바꾸는 함수를 뒤에 정의함  
+  - useState모듈: 컴포넌트내에 다른 객체의 변화가 있을 때 자신의 데이터를 동적으로 변경할 때 사용    
+    컴포넌트의 다른 객체의 변화는 useEffect모듈로 감지하고 자신의 데이터 객체명을 앞에, 바꾸는 함수를 뒤에 정의함  
     아래 예에서 user객체를 변경시키는 함수를 setUser로 정의한 것임   
     user객체의 초기값은 useState의 파라미터값임. 아래 예에서는 초기값을 null로 한 것임   
     ```
@@ -129,8 +129,8 @@ npx create-react-app subride-front
     ```
 
   - import한 모듈을 처리할 객체를 생성   
-    > **navigate**: 페이지 이동 처리   
-    > **location**: 현재 페이지 위치를 담고있는 객체   
+    > **navigate**: 컴포넌트 이동 처리   
+    > **location**: 현재 컴포넌트 위치를 담고있는 객체   
     > **isTokenVefified**: 인증 토큰이 유효한지와 재갱신처리를 담당하는 객체  
     ```
     const navigate = useNavigate();
@@ -138,9 +138,9 @@ npx create-react-app subride-front
     const isTokenVerified = useAuthCheck();
     ```    
   
-  - useEffect: 페이지의 어떤 객체의 값의 변화를 감지하여 필요한 처리를 하는 모듈  
-    아래 예에서는 감지할 객체가 '[]'임. 이 객체는 페이지 자체라서 페이지가 로딩되는 것을 감지함   
-    즉, 페이지가 로딩될 때 setUser라는 useState모듈로 정의된 함수가 호출되어 user객체의 값이 셋팅됨    
+  - useEffect: 컴포넌트 내의 어떤 객체의 값의 변화를 감지하여 필요한 처리를 하는 모듈  
+    아래 예에서는 감지할 객체가 '[]'임. 이 객체는 컴포넌트 자체라서 컴포넌트가 로딩되는 것을 감지함   
+    즉, 컴포넌트가 로딩될 때 setUser가 호출되어 user객체의 값이 셋팅 됨    
     ```
     useEffect(() => {
         setUser(JSON.parse(sessionStorage.getItem("user")));
@@ -149,7 +149,7 @@ npx create-react-app subride-front
 
   - useCallback모듈은 수행 요청을 받았을 때 무조건 수행하지 않고, 지정한 객체의 값이 변경되었을 때만 하게 함   
     아래 예에서는 handleAfterLogin 함수가 불려 졌을 때, navigate객체의 값이 변경되었는지 체크하고 수행함  
-    handleAfterLogin은 로그인 페이지에서 로그인이 성공했을 때 호출함    
+    handleAfterLogin은 로그인 컴포넌트에서 로그인이 성공했을 때 호출함    
     ```  
     const handleAfterLogin = useCallback(
         (userData) => {
@@ -164,8 +164,8 @@ npx create-react-app subride-front
   - index.js에서 App모듈이 불려지므로 아래와 같이 리턴을 해줘야 화면에 나타남   
     React에서는 1개의 DOM객체만 리턴할 수 있음.  
     만약 여러개의 DOM객체를 리턴해야 한다면 아래와 같이 '<>'과 '</>'사이에 리턴값을 지정해야 함  
-    <ToastContainer />는 토스트 팝업을 표시하기 위해 생성한 것임.  '
-    각 페이지에서 토스트 팝업을 요청하면 이 영역에 팝업 내용이 동적으로 들어가고 표시 위치가 적절히  
+    \<ToastContainer /\>는 토스트 팝업을 표시하기 위해 생성한 것임.  '
+    각 컴포넌트에서 토스트 팝업을 요청하면 이 영역에 팝업 내용이 동적으로 들어가고 표시 위치가 적절히  
     지정되어 화면에 나타나게 됨     
     ```
     return (
@@ -181,17 +181,22 @@ npx create-react-app subride-front
         </>
     );
     ```
+    > **컴포넌트 간 변수와 함수 전달**    
+    > AppRoute 컴포넌트를 호출하면서 파라미터로 user객체와 handleAfterLogin함수를 전달하고 있음    
+    > 이렇게 각 컴포넌트 간에 파라미터로 변수와 함수를 전달함    
+    
 
   - 모듈 Export: 다른 모듈에서 쓸 수 있도록 외부에 모듈을 공개함   
     ```
     export default App;
     ```
 
-- src/routes 디렉토리 복사: 페이지 연결 정보 정의됨   
+- src/routes 디렉토리 복사: 페이지 간 연결 정보 정의됨   
   > **페이지 라우팅** 정의: 라우팅 정의는 한 파일에 할 수 있지만 페이지의 계층적 구조에 따라 분할하는 것이 좋음   
   > index.js: 최상위 라우팅 정의 파일   
   > auth.route.js: 로그인과 회원가입 페이지의 라우팅 정의    
   > main.routes.js: 메인화면의 라우팅 정의   
+  ※ 앞으로 '페이지'라는 말 대신에 **'컴포넌트'**라는 말을 사용하겠음
 
 - src/utils 디렉토리 복사: 공통 유틸리티 모듈과 함수      
   > **apiInstance.js**: 백엔드 API 요청을 처리하는 객체 생성. 서비스명별 주소와 요청헤더에 인증토큰을 추가함   
