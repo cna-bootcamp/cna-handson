@@ -15,11 +15,11 @@ git checkout -B version1
 React 컴포넌트(페이지)는 목적별로 디렉토리를 만드는 것이 관리하기 쉽습니다.   
 - 컴포넌트 디렉토리 생성   
 아래와 같이 pages디렉토리를 만들고 하위에 Auth와 Main 디렉토리를 만드십시오.   
-![alt text](image-9.png)   
-![alt text](image-10.png)   
+![alt text](./images/image-9.png)   
+![alt text](./images/image-10.png)   
 Main폴더를 만들때는 'pages' 위에서 우측 마우스 버튼을 누르면 됨   
-![alt text](image-11.png)
-![alt text](image-12.png)
+![alt text](./images/image-11.png)
+![alt text](./images/image-12.png)
 
 - 로그인 컴포넌트 개발   
   - Login.jsx파일 복사: 클론 프로젝트에서 Login.jsx파일을 복사합니다.   
@@ -199,7 +199,7 @@ npm start
 
 - 자동으로 브라우저에 로그인 페이지가 나올 겁니다.  
 스마트폰 사이즈로 보기 위해 마우스 우측 메뉴에서 맨 아래에 있는 '검사'를 누릅니다.   
-![alt text](image-13.png)
+![alt text](./images/image-13.png)
 
 위와 같이 로그인 페이지가 나오면 성공입니다. 
 
@@ -220,7 +220,7 @@ npm start
   ```    
   
   - IntelliJ를 실행하고 temp디렉토리 하위의 subride프로젝트를 오픈합니다.   
-  ![alt text](image-14.png)
+  ![alt text](./images/image-14.png)
 
 
 - MySQL 컨테이너를 실행합니다.   
@@ -269,21 +269,21 @@ npm start
 
   - 회원관리 서비스를 시작합니다.    
   MemberApplication을 찾아 우측 마우스 메뉴에서 실행하십시오.   
-  ![alt text](image-15.png)    
+  ![alt text](./images/image-15.png)    
 
 
 - 회원가입 테스트   
   - 로그인 화면에서 [SIGN UP]버튼을 눌러 회원가입 페이지로 이동합니다.    
   - 사용자 ID는 user01~user05사이의 값으로 입력합니다. 테스트 소비 데이터가 그 ID로 생성되었기 때문입니다.    
   - 나머지 항목은 자유롭게 입력 하십시오.   
-  ![alt text](image-16.png)   
+  ![alt text](./images/image-16.png)   
   - 회원가입 버튼 클릭 시 '회원 가입이 되었습니다.'라는 토스트 메시지가 잠깐 나오고    
   로그인 페이지로 이동하면 성공입니다.   
 
 - 로그인 테스트   
   - 등록한 ID와 패스워드로 로그인 합니다.   
   - 아래와 같이 로그인한 사용자 정보가 나오면 성공입니다.   
-  ![alt text](image-17.png)   
+  ![alt text](./images/image-17.png)   
 
 
 
