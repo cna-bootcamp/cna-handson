@@ -56,8 +56,8 @@ npx create-react-app subride-front
   이 파일은 라이브러리 설치 시 다시 생성되며, 과거 정보가 있으면 문제 생길 수 있으므로 삭제   
 
 - src/assets 디렉토리 복사: 공통 이미지          
-- src/components 디렉토리 복사  
-  > **공통컴포넌트**  
+- src/components 디렉토리 복사: 공통적인 화면 구성요소를 모은 컴포넌트  
+  > **공통 화면 컴포넌트**  
   > BackHeader.jsx: 뒤로가기 버튼  
   > CommonButton.jsx: 사용안함  
   > Navigation.jsx: 앱 하단의 바로가기 버튼  
@@ -66,7 +66,7 @@ npx create-react-app subride-front
 - src/fonts 디렉토리 복사: 사용할 폰트이며 나눔고딕체를 사용  
 
 - index.html 바꾸기: 클론 프로젝트의 public/index.html 내용으로 변경   
-  앱이 실행될 때 index.html이 실행됨. root 디비전안에 index.js파일리 불려짐     
+  앱이 실행될 때 index.html이 실행됨. root 디비전안에 index.js파일이 불려짐     
   ```
   <body>
     <div id="root"></div>
@@ -74,7 +74,7 @@ npx create-react-app subride-front
   ```  
 
 - index.js 파일 내용 복사  
-  <App />부분에 App.js가 불려짐    
+  '<App />'부분에 App.js가 불려짐    
   ```
   root.render(
   //<React.StrictMode>
