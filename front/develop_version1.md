@@ -284,6 +284,34 @@ npm start
   - 아래와 같이 로그인한 사용자 정보가 나오면 성공입니다.   
   ![alt text](./images/image-17.png)   
 
+## Version1 원격 Git repository에 푸시 및 Tagging  
+- Git에 푸시 합니다.   
+> **Tip: 이전 명령어 찾기**    
+> 터미널에서 위/아래 화살표를 누르면 이전에 사용한 명령어를 볼 수 있습니다.    
+> history라는 명령을 치면 이전 명령어 목록을 볼 수 있습니다.    
+> CTRL-r을 누르면 키워드로 명령어를 찾을 수 있습니다. 찾은 후 ESC를 누르고 수정한 후 실행하면 됩니다.     
+![alt text](./images/image-19.png)   
+```
+git add . && git commit -m "로그인, 회원가입 페이지 완료" && git push -u origin main
+```
+
+- Version 태깅: 버전관리를 위해 tagging합니다.   
+```
+git tag -a ver1.0.0 -m "로그인, 회원관리 페이지"
+git push origin ver1.0.0
+``` 
+GitHub에서 레포지토리로 이동합니다.  
+맨 우측 상단의 본인 프로파일 아이콘 눌러 레포지토리로 이동 합니다.       
+![alt text](./images/image-20.png)
+
+Tags를 클릭합니다. 버전 태그를 확인할 수 있습니다.   
+![alt text](./images/image-21.png)    
+![alt text](./images/image-22.png)    
+
+> **Tip: 태그 삭제**  
+> 로컬 Git repository 태그 삭제: ex) git tag -d ver1.0.0    
+> 원격 Git repository 태그 삭제: ex) git push origin :refs/tags/ver1.0.0    
+
 
 ## 프로세스 정리   
 이후 개발과 테스트를 위해 프론트엔드, 백엔드를 중지합니다.   
