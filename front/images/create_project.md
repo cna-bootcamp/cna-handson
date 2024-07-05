@@ -74,7 +74,7 @@ npx create-react-app subride-front
   ```  
 
 - index.js 파일 내용 복사  
-  "<App />"부분에 App.js가 불려짐    
+  {<App />}부분에 App.js가 불려짐    
   ```
   root.render(
   //<React.StrictMode>
