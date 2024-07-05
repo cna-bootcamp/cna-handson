@@ -1,7 +1,7 @@
 # React 프로젝트 생성 
 
 ## 새로운 프로젝트 작성
--  vscode 실행
+-  vscode 실행  
 ![alt text](image.png)
 
 - 새로운 터미널을 생성   
