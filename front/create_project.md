@@ -14,8 +14,8 @@ npx create-react-app subride-front
 ```  
 
 - vscode실행하고 'subride-front'폴더 오픈   
-![alt text](image.png)   
-![alt text](image-1.png)   
+![alt text](./images/image.png)   
+![alt text](./images/image-1.png)   
 
 ## 클론 프로젝트 다운로드   
 - MobaXTerm에서 로컬 터미널 열기(왼쪽 'Local'더블클릭). Mac은 새탭이나 새창으로 터미널 열기   
@@ -34,9 +34,9 @@ npx create-react-app subride-front
 ## 기본 구조 작성
 - public폴더 이미지 복사   
   - 클론 프로젝트의 public디렉토리 하위의 폴더 선택하고 CTRL-C로 복사   
-    ![alt text](image-2.png)  
+    ![alt text](./images/image-2.png)  
   - 내 프로젝트 public디렉토리를 선택하고 붙여넣기   
-    ![alt text](image-3.png)
+    ![alt text](./images/image-3.png)
 
 - jsconfig.json 생성: 클론 프로젝트 루트에 있는 jsconfig.json복사하여 붙여넣기   
 이 파일의 역할은 소스 디렉토리의 위치를 지정하는 것입니다.  
@@ -210,18 +210,18 @@ npx create-react-app subride-front
 - [GitHub](https://www.github.com)를 로그인: 가입한 ID/PW로 로그인    
 - Git Repository 생성   
   - 좌측 상단의 [New]버튼 클릭   
-  ![alt text](image-4.png)    
+  ![alt text](./images/image-4.png)    
   - 레포지토리 이름만 'subride-front'로 지정하고, 나머지는 디폴트 값으로 함   
-  ![alt text](image-5.png)
+  ![alt text](./images/image-5.png)
   - 하단의 [Create repository]눌러 생성   
   - 레포지토리 주소 복사    
-  ![alt text](image-6.png)   
+  ![alt text](./images/image-6.png)   
 
 - 소스 업로드    
   - vscode 에서 터미널 오픈    
-  ![alt text](image-7.png)   
+  ![alt text](./images/image-7.png)   
   - 'Git Bash' 터미널로 다시 오픈   
-  ![alt text](image-8.png)   
+  ![alt text](./images/image-8.png)   
   - 최초로 Git을 사용하는 경우 user.name, user.email 지정(**본인걸로 변경**)       
   ```
   git config --global user.name "온달"
