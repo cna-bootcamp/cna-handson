@@ -284,7 +284,7 @@ npm start
   - 아래와 같이 로그인한 사용자 정보가 나오면 성공입니다.   
   ![alt text](./images/image-17.png)   
 
-## Version1 원격 Git repository에 푸시 및 Tagging  
+## 푸시 및 Tagging  
 - Git에 푸시 합니다.   
 > **Tip: 이전 명령어 찾기**    
 > 터미널에서 위/아래 화살표를 누르면 이전에 사용한 명령어를 볼 수 있습니다.    
