@@ -209,9 +209,9 @@ npm start
 
 - 백엔드 애플리케이션 소스 다운로드   
   - MobaXTerm 터미널(Mac사용자는 맥터미널)을 여십시오.  
-  - 작업영역 디렉토리에 temp디렉토리를 만듭니다. 
+  - {HOME}/clone 디렉토리로 이동    
   ```
-   mkdir -p ~/workspace/temp && cd ~/workspace/temp
+  cd ~/clone
   ```    
   
   - 백엔드 서비스 중 회원관리 서비스가 개발된 version1 브랜치를 clone합니다.   
@@ -219,9 +219,7 @@ npm start
   git clone -b version1 https://github.com/cna-bootcamp/subride.git 
   ```    
   
-  - IntelliJ를 실행하고 temp디렉토리 하위의 subride프로젝트를 오픈합니다.   
-  ![alt text](./images/image-14.png)
-
+  - IntelliJ를 실행하고 {HOME}/clone/subride 프로젝트를 오픈합니다.   
 
 - MySQL 컨테이너를 실행합니다.   
   개발환경 설정 시에 이미 실행중인 MySQL컨테이너가 있을 수 있습니다.    
