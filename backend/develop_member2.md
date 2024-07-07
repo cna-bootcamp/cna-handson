@@ -82,7 +82,8 @@
 
 ## SecurityConfig클래스 수정   
     
-아래와 같이 Class명 하위에 JwtTokenProvider와 CustomUserDetailsService 객체가 생성되도록 합니다.   
+    아래와 같이 Class명 하위에 JwtTokenProvider와 CustomUserDetailsService 객체가 생성되도록 합니다.   
+    
     ```
     public class SecurityConfig {
         private final JwtTokenProvider jwtTokenProvider;
