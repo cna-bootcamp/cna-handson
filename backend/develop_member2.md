@@ -60,6 +60,8 @@
 
     JWT토큰을 생성할 때는 디코딩할 때 쓸 Secret Key, 인증토큰 유효시간, 갱신토큰 유효시간을 정의해야 합니다.   
     Secret key는 매우 중요하기 때문에 환경변수로 분리하는 것이 안전합니다.   
+    application.yml에 보면 JWT관련한 설정을 확인할 수 있습니다.    
+
     > **Secret Key 만들기**: openssl rand -base64 32  
 
     ```
@@ -80,7 +82,7 @@
 
 ## SecurityConfig클래스 수정   
     
-    아래와 같이 Class명 하위에 JwtTokenProvider와 CustomUserDetailsService 객체가 생성되도록 합니다.   
+아래와 같이 Class명 하위에 JwtTokenProvider와 CustomUserDetailsService 객체가 생성되도록 합니다.   
     ```
     public class SecurityConfig {
         private final JwtTokenProvider jwtTokenProvider;
