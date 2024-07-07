@@ -355,6 +355,8 @@ Swagger페이지에서 우측 마우스 버튼을 누르고 맨 아래의 '검�
     IntelliJ에서 GitBash 터미널을 엽니다.   
     ![alt text](./images/image-60.png)    
 
+    > **Tip: IntelliJ 터미널에서 복사-붙여넣기**는 CTRL-c와 CTRL-v를 사용하십시오.     
+
     로컬 Git repository를 초기화 합니다. 
     ```
     git init 
