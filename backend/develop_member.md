@@ -415,6 +415,9 @@ infra 밑에 in.web 패키지를 만듭니다.
 - 회원생성 API 개발
     - AuthController 정리  
     AuthController에서 signup 메소드만 남기고 모두 지움  
+    > **Tip**: 아래 소스를 복사-붙여넣기 해도 되는데,     
+    > RequestBody는 org.springframework.web.bind.annotation.RequestBody을 선택하세요.      
+    
     ```
     package com.subride.member.infra.in.web;
 
