@@ -82,7 +82,7 @@
 
 ## SecurityConfig클래스 수정   
     
-    아래와 같이 Class명 하위에 JwtTokenProvider와 CustomUserDetailsService 객체가 생성되도록 합니다.   
+  아래와 같이 Class명 하위에 JwtTokenProvider와 CustomUserDetailsService 객체가 생성되도록 합니다.   
     
     ```
     public class SecurityConfig {
@@ -97,8 +97,9 @@
     ```
 
 
-    아래와 같이 userDetailsService와 addFilterBefore라인의 주석을 해제 합니다.   
-    그 위의 괄호 끝에 있던 세미콜론은 지워야 합니다.    
+  아래와 같이 userDetailsService와 addFilterBefore라인의 주석을 해제 합니다.   
+  그 위의 괄호 끝에 있던 세미콜론은 지워야 합니다.    
+  
     ```
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
