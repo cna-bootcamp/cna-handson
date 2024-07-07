@@ -1,4 +1,4 @@
-# 회원관리 서비스 개발  
+# 회원관리 서비스 개발(1) 
 
 회원관리 서비스의 패키지 구조는 아래와 같습니다.    
 클린아키텍처를 더 잘 적용하기 위하여 biz와 infra프로젝트를 나누었습니다.   
@@ -947,14 +947,6 @@ Request body에 아래 예와 같이 값을 입력합니다.
 ![alt text](./images/image-37.png)
 
 ---
-
-## 인증 처리 개발     
-인증을 처리 코드를 개발 합니다.  
-
-  - 보안 설정 Config 클래스 추가   
-    member-infra프로젝트의 src/main   
-    ![alt text](./images/image-7.png)
-
 
 ## Tip
 
