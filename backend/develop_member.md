@@ -526,7 +526,7 @@ IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니
     > Structure창을 열어 보십시오. 아래와 같이 메소드가 자동 생성된걸 확인할 수 있습니다.    
     > ![alt text](./images/image-19.png)
 
-- inport usecase: IAuthServer
+- inport usecase: IAuthServer    
     Member서비스의 애플리케이션 로직을 정의한 인터페이스 객체입니다.    
     실제 구현은 AuthServiceImpl클래스에서 합니다.   
     ```
@@ -538,7 +538,7 @@ IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니
     }
     ```
 
-- service: AuthServiceImpl  
+- service: AuthServiceImpl       
     inport usecase에서 정의한 메소드를 실제 구현한 클래스입니다.    
 
     ```
@@ -568,7 +568,7 @@ IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니
 
     ```    
 
-- outport usecase: IAuthProvider
+- outport usecase: IAuthProvider     
     애플리케이션 서비스가 외부 기술/툴과 인터페이스 하기 위해 필요한 메소드를 정의한 인터페이스입니다.   
     실제 구현은 infra프로젝트의 out adapter레이어에서 하게 됩니다.  
     ```
@@ -585,15 +585,15 @@ outport usecase에 정의한 메소드를 처리하기 위한 Output Adapter 클
 
 - Package 생성
     com.subride.member.infra.in.web을 선택하고, 우측 마우스 버튼에서 새로운 패키지 생성을 선택합니다.   
-    기존 값을 수정하여 아래와 같이 com.subride.member.infra.out 패키지를 만듭니다. 
+    기존 값을 수정하여 아래와 같이 com.subride.member.infra.out 패키지를 만듭니다.    
     ![alt text](./images/image-20.png)   
 
 - output adapter 클래스 복사  
-    - output adapter 클래스 복사 
-    클론 프로젝트의 com.subride.member.infra.out.adapter패키지를 선택하고 복사한 후, 
-    개발 프로젝트의 com.subride.member.infra.out패키지를 선택한 후 붙여넣기 합니다.   
+    - output adapter 클래스 복사   
+    클론 프로젝트의 com.subride.member.infra.out.adapter패키지를 선택하고 복사한 후,    
+    개발 프로젝트의 com.subride.member.infra.out패키지를 선택한 후 붙여넣기 합니다.    
     
-    - entity 클래스 복사
+    - entity 클래스 복사    
     개발 프로젝트에 entity 패키지를 추가하고 클론 프로젝트에서 Entity클래스 2개를 복사합니다.  
 
     ```
@@ -647,7 +647,7 @@ outport usecase에 정의한 메소드를 처리하기 위한 Output Adapter 클
     }
     ``` 
 
-    - Repository 클래스 복사  
+    - Repository 클래스 복사     
     개발 프로젝트에 repo 패키지를 추가하고 클론 프로젝트에서 Repository 클래스 2개를 복사합니다.  
     Java ORM인 JPA와 Mabatis 중 JPA를 사용하였습니다.   
     JPA를 사용할 때는 이렇게 인터페이스만 만들어 주면 자동으로 테이블을 CRUD하는 메소드들이 만들어집니다.  
@@ -659,13 +659,15 @@ outport usecase에 정의한 메소드를 처리하기 위한 Output Adapter 클
     }
     ```
 
-    - InfraException 클래스 복사
+    - InfraException 클래스 복사   
     AuthProviderImpl에서 사용하는 InfraException클래스를 클론 프로젝트에서 복사합니다.  
     - 소스에서 일부 수정
       아직 구현하지 않을 부분을 수정합니다.   
       AuthenticationManager 프라퍼티를 주석 처리 합니다.  
       validateAuth메소드를 널을 리턴하는것으로 바꿉니다.  
     ```
+    package com.subride.member.infra.out.adapter;
+
     @Service
     @RequiredArgsConstructor
     public class AuthProviderImpl implements IAuthProvider {
@@ -706,7 +708,7 @@ outport usecase에 정의한 메소드를 처리하기 위한 Output Adapter 클
 ## Security Config 
 Security Config는 인증 처리를 위해 필요합니다.  
 아직 인증 처리가 필요 없지만 CORS(도메인이 다른 프론트엔드에서 접근),    
-로그인/회원등록/Swagger페이지와 같이 인증 없이 등록할 페이지 지정,    
+로그인/회원등록/Swagger페이지와 같이 인증 없이 접근할 페이지 지정,    
 Password Encoder 객체 생성을 위해 만들어야 합니다.    
 
 개발 프로젝트에 com.subride.member.infra.common.config패키지를 만듭니다.    
@@ -799,9 +801,10 @@ public class SecurityConfig {
 ```
 
 ## Swagger Config
-    API문서화에 사용되는 Swagger의 환경설정 클래스를 만듭니다.    
-    개발 프로젝트에 com.subride.member.infra.common.config패키지를 만듭니다.    
-    클론 프로젝트에서 동일 패키지 하위에 있는 SpringDocConfig클래스를 복사합니다.    
+API문서화에 사용되는 Swagger의 환경설정 클래스를 만듭니다.    
+개발 프로젝트에 com.subride.member.infra.common.config패키지를 만듭니다.    
+클론 프로젝트에서 동일 패키지 하위에 있는 SpringDocConfig클래스를 복사합니다.    
+
     ```
     @Configuration      //Config 레이어의 클래스임을 나타내며 Bean클래스로 등록되어 실행시 자동으로 객체가 생성됨
     @SuppressWarnings("unused")     //unused 경고를 표시하지 않게 하는 어노테이션 
