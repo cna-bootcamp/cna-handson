@@ -99,7 +99,7 @@
 
   아래와 같이 userDetailsService와 addFilterBefore라인의 주석을 해제 합니다.   
   그 위의 괄호 끝에 있던 세미콜론은 지워야 합니다.    
-  
+
     ```
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -339,6 +339,52 @@ Swagger페이지에서 우측 마우스 버튼을 누르고 맨 아래의 '검�
 스크롤을 조금 내려 요청 헤더의 값을 보면 Authorization키의 값으로   
 인증 토큰 값이 'Bearer'로 시작되는것을 볼 수 있습니다.   
 ![alt text](./images/image-52.png)
+
+---
+
+## Git 저장소 생성 및 소스 업로드   
+
+본인의 Git Repository를 만들고 소스를 업로드 합니다.   
+
+- GibHub로그인, 레포지토리 만들기   
+    프론트엔드 프로젝트 생성 시 해본것처럼 GitHub에 레포지토리를 만듭니다. -> [Git 업로드](https://github.com/cna-bootcamp/cna-handson/blob/main/front/create_project.md#git-%EC%97%85%EB%A1%9C%EB%93%9C)
+
+    레포지토리의 이름은 'subride'로 합니다.  물론 변경해도 됩니다.   
+
+- Git Push 하기  
+    IntelliJ에서 GitBash 터미널을 엽니다.   
+    ![alt text](./images/image-60.png)    
+
+    로컬 Git repository를 초기화 합니다. 
+    ```
+    git init 
+    ```
+
+    위에서 만든 원격 Git repository를 연결합니다.  
+    아래는 예제이고 반드시 **본인 Git Repository주소로 변경** 해야 합니다.   
+    ```
+    git remote add origin https://github.com/hiondal/subride.git
+    git remote get-url origin 
+    ```
+
+    로컬 Git repository의 브랜치를 member로 변경합니다.  
+    ```
+    git checkout -B member
+    ```
+
+    원격 Git repository에 푸시합니다.  
+    ```
+    git add . && git commit -m "member" && git push -u origin member
+    ```
+
+    v1.0.0으로 태깅하고 푸시합니다.  
+    ```
+    git tag -a v1.0.0 -m "회원관리 서비스" 
+    git push origin v1.0.0
+    ```
+
+- 확인  
+    github.com에서 잘 푸시되었는지 소스와 태그를 확인 합니다.  
 
 ---
 
