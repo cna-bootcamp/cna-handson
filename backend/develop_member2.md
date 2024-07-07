@@ -171,11 +171,11 @@ public class LoggingAspect {
 ```
 
 애플리케이션을 재시작하고 콘솔 로그를 보면 로깅이 자동으로 되는 걸 확인할 수 있습니다.   
-![alt text](image-39.png)    
+![alt text](./images/image-39.png)    
 
 Swagger페이지에서 회원등록 테스트를 하고 콘솔을 확인해 보십시오.   
 >  **Tip**: 테스트 시 동일한 데이터로 하셔도 됩니다. 동일키 데이터는 업데이트 합니다.   
-![alt text](image-38.png)   
+![alt text](./images/image-38.png)   
 
 ## 로그인 API 추가  
 - AuthController, AuthControllerHelper 수정  
@@ -203,7 +203,7 @@ Swagger페이지에서 회원등록 테스트를 하고 콘솔을 확인해 보�
     authService는 인터페이스이기 때문에 코드가 없습니다.   
     실제 구현체인 AuthServiceImpl로 가야 합니다. 
     아래와 같이 login 위에서 우측 마우스를 누른 후 Go To > Implementation(s)를 선택합니다.  
-    ![alt text](image-40.png)   
+    ![alt text](./images/image-40.png)   
 
     CTRL을 누른 상태에서 authProvider.validateAuth위에 마우스를 올린 후 클릭하여 
     AuthProvider로 이동합니다.   
@@ -254,14 +254,14 @@ Swagger페이지에서 회원등록 테스트를 하고 콘솔을 확인해 보�
 - 테스트
     애플리케이션을 재시작하고, swagger페이지를 열어 로그인을 테스트 해 보십시오.  
     아래와 같이 결과가 나오면 성공입니다.  
-    ![alt text](image-41.png)
+    ![alt text](./images/image-41.png)
 
 ## 인증 토큰 검증, 인증 토큰 갱신 API 추가  
 클론 프로젝트에서 소스를 복사하고, 흐름을 따라 가면서 코드를 이해해 보세요.   
 
 > **Tip: 코드영역 최대화**:   
 > 클래스 타이틀 영역에서 더블클릭하면 최대화 됩니다. 원래대로 돌리려면 더블클릭 다시 누르면 됩니다.  
-> ![alt text](image-42.png)
+> ![alt text](./images/image-42.png)
 
 이미 다 개발이 되어 있어 수정할 건 없을 겁니다.  
 
@@ -292,49 +292,49 @@ public class MemberController {
 
 애플리케이션을 재시작하고 Swagger페이지를 엽니다.
 사용자 API가 추가된 것을 보실 수 있을 겁니다.   
-![alt text](image-43.png)   
+![alt text](./images/image-43.png)   
 
 사용자 API를 아무거나 테스트 해 보십시오.   
 성공하셨나요?  403(Forbidden) 에러가 나는게 정상입니다.   
-![alt text](image-44.png)   
+![alt text](./images/image-44.png)   
 
 인증이 안된 상태에서 사용자 정보를 요청하니까 에러가 나는겁니다.   
 SecurityConfig클래스에서 우리가 그렇게 설정을 했으니까요.   
 또한 MemberController의 **@SecurityRequirement(name = "bearerAuth")** 어노테이션으로  
 인증토큰값을 보내는 방법을 설정했습니다.  
 
-![alt text](image-45.png)    
+![alt text](./images/image-45.png)    
 
 이제 약속대로 인증토큰값을 보내고 다시 테스트 해 보겠습니다.   
 먼저 swagger에서 로그인 API를 테스트 한 후 그 결과값에서 accessToken키의 암호같은 긴 문자열을 복사 하십시오.   
 이 값이 인증 토큰값입니다.   
-![alt text](image-46.png)    
+![alt text](./images/image-46.png)    
 
 Swagger 페이지의 우측 상단에 있는 Authorize버튼을 누릅니다.   
-![alt text](image-47.png)   
+![alt text](./images/image-47.png)   
 
 복사한 값을 붙여 넣습니다.   Authorize버튼을 누른 후 Close버튼을 눌러 닫습니다.   
-![alt text](image-48.png)   
+![alt text](./images/image-48.png)   
 
 이제 다시 회원정보 API를 테스트 합니다.   
 이번에는 정상적으로 값이 리턴될 것입니다.   
-![alt text](image-49.png)
+![alt text](./images/image-49.png)
 
 
 진짜 요청 헤더에 인증 토큰이 약속한대로 보내지는지 봅시다.  
 Swagger페이지에서 우측 마우스 버튼을 누르고 맨 아래의 '검사'메뉴를 선택하거나, F12버튼을 눌러 개발자 도구를 여세요.   
 스마트폰 화면처럼 보여 너무 작으면 아래 그림에서 박스 친 왼쪽 버튼을 누르면 커집니다.   
 박스 친 오른쪽 네트워크 탭을 누릅니다.   브라우저에서 서버로 보내는 요청 내용을 볼 수 있습니다.   
-![alt text](image-50.png)   
+![alt text](./images/image-50.png)   
 
 왼쪽에서 회원정보 API를 다시 테스트 합니다.   
 아래 그림처럼 요청 기록이 나타날 겁니다.   
-![alt text](image-51.png)
+![alt text](./images/image-51.png)
 
 요청 기록을 누르면 상세 정보가 나옵니다.   
 스크롤을 조금 내려 요청 헤더의 값을 보면 Authorization키의 값으로   
 인증 토큰 값이 'Bearer'로 시작되는것을 볼 수 있습니다.   
-![alt text](image-52.png)
+![alt text](./images/image-52.png)
 
 ---
 
