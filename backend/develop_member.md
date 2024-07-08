@@ -9,6 +9,45 @@
 - **Sequence 설계**
   ![sequence](./images/sequence.svg)    
 
+
+## Clauding 프롬프트  
+**클로딩(Clauding)**이라는 말은 제가 만든 말로 구글링처럼 **Claude를 활용하여 원하는 것을 얻는다**는 의미입니다.
+설계 결과를 클로딩하여 개발하는 프롬프트는 아래와 같습니다. 
+
+```
+제공한 기존 소스와 클래스 설계에 기반하여 아래 요구사항대로 개발 해줘.
+
+- 대상 서비스: 회원관리(member)
+- 개발언어 : Spring Boot
+- infra와 biz는 별도의 프로젝트로 나누고, 각 프로젝트의 이름은 member-biz와 member-infra로 함
+- 제공한 최상위 프로젝트의 build.gradle과 settings.gradle를 보고 각 프로젝트의 build.gradle 제공
+- 제공한 infra프로젝트의 application.yml을 보고 환경변수 사용하여 개발   
+- API 응답은 common프로젝트의 CommonUtils 클래스의 메소드를 사용    
+
+답변 순서는 아래와 같아
+- 전체 패키지 구조도 
+- biz 프로젝트 소스 
+- infra 프로젝트 소스
+
+먼저 전체 패키지 구조도부터 보여줘
+```
+클로드가 제시한 패키지 구조를 보고 수정사항을 요청하여 패키지 구조부터 완성합니다.  
+그리고 완성된 패키지 구조에 따라 개발을 요청합니다.
+
+> **클로딩 개발 Tip**   
+> 실제 개발시에는 아래 코드를 mergesrc.py를 이용하여 한 파일로 만들어 클로드에게 주십시오.   
+> - 최상위 프로젝트의 build.gradle, settings.gradle   
+> - common 프로젝트 전체   
+> - infra 프로젝트의 infra.common, infra.exception 패키지 하위 클래스  
+
+> **소스 통합 유틸리티 mergesrc.py 사용법**   
+> backend/mergesrc.py를 최상위 디렉토리에 복사합니다.   
+> 사용전에 python을 설치 합니다.    
+> 터미널에서 아래 명령으로 소스를 한 파일로 통합합니다.     
+> python mergesrc.py
+> ※ Mac은 python3 mergesrc.py    
+> 통합파일은 MergedSource.java라는 이름으로 최상위 디렉토리에 생성됩니다.   
+
 ## 패키지 구조 
 회원관리 서비스의 패키지 구조는 아래와 같습니다.    
 클린아키텍처를 더 잘 적용하기 위하여 biz와 infra프로젝트를 나누었습니다.   

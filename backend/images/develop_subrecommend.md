@@ -110,25 +110,12 @@ subrecommend/
 | 테스트 | Swagger 테스트 | Swagger에서 API 테스트 | [Link](#)  |
 | 소스 저장 | Git 푸시 | Gig에 소스 저장 | [Link](#)  |
 
-> **개발 순서**   
-> - 프로젝트 생성  
-> - subrecommend-biz 프로젝트 복사   
-> - subrecommend-infra 기본 클래스 복사    
->   - infra.common 패키지 하위 클래스   
->   - infra.dto 패키지 하위 클래스   
->   - infra.out.entity 패키지 하위 클래스  
->   - infra.out.repo 패키지 하위 클래스   
->   - infra.exception 패키지 하위 클래스  
->   - SubRecommendApplication 클래스  
-> - subrecommend-infra의 build.gradle과 application.yml 파일 복사 
-> - infra.in.web의 SubRecommendController, SubRecommendControllerHelper 
-> - infra.out.adapter의 SubRecommendProviderImpl   
 
+## 생성 > 프로젝트 생성  
 
 먼저 클론 프로젝트의 브랜치를 아래 그림처럼 version2로 변경하십시오.   
 ![alt text](image-53.png)   
 
-## 프로젝트 생성  
 - 개발 프로젝트의 브랜치를 'subrecommend'로 변경합니다.  
     ```
     git checkout -B subrecommend
