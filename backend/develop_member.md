@@ -113,8 +113,8 @@ com.subride
 |                     | IntelliJ 환경 설정          | Import 라이브러리, 오타 검사 등 설정 |
 | 프로젝트 추가       | common 프로젝트 복사        | 공통모듈 클래스 복사                 |
 |                     | member 프로젝트 추가        | biz와 infra 프로젝트 추가            |
-| build.gradle        | 최상위 프로젝트             | 최상위 프로젝트 manifest 작성        |
-|                     | Member 프로젝트             | biz와 infra 프로젝트 manifest 작성   |
+| 빌드 스크립트 작성        | 최상위 프로젝트 빌드 스크립트          | 최상위 프로젝트 build.gradle 작성        |
+|                     | Member 프로젝트 빌드 스크립트             | biz와 infra 프로젝트 build.gradle 작성   |
 | Biz 프로젝트 개발   | Usecase, Service, Domain    | biz 프로젝트 복사                    |
 | Infra 프로젝트 개발 | 애플리케이션 설정 파일 작성 | application.yml 작성                 |
 |                     | Main 프로그램 개발          | 최초 실행되는 Main class 개발        |
@@ -122,7 +122,7 @@ com.subride
 |                     | Gateway 개발                | Output Adapter 개발                  |
 | Config클래스 개발   | Security Config             | 웹 보안, 인증/인가 보안 설정         |
 |                     | Swagger Config              | API 문서화 설정                      |
-
+| 테스트              | 회원등록 테스트             | Swagger 페이지에서 API 테스트        |
 
 ## 프로젝트 생성
 백엔드 서비스를 개발하기 위한 프로젝트를 먼저 생성합니다.
