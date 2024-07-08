@@ -39,6 +39,7 @@
 > - 최상위 프로젝트의 build.gradle, settings.gradle   
 > - common 프로젝트 전체   
 > - infra 프로젝트의 infra.common, infra.exception 패키지 하위 클래스  
+> ※ 제공하는 infra 프로젝트의 클래스들은 인증, 웹 보안, Swagger, 로깅 관련 클래스입니다.   
 
 > **소스 통합 유틸리티 mergesrc.py 사용법**   
 > backend/mergesrc.py를 최상위 디렉토리에 복사합니다.   
