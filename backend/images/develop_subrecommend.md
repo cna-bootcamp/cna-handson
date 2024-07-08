@@ -80,6 +80,24 @@ subrecommend/
 이번 부터는 중요한 부분만 설명하면서 빨리 개발하도록 하겠습니다.   
 설명 안한 소스에 궁금한게 있다면 저에게 묻거나 Claude에게 문의하기 바랍니다.   
 
+## 개발 순서 
+| Group | Task              | Description               | Link   |
+| :-----| :-----------------| :------------------------ | :------|
+| 생성 | 프로젝트 생성 | 구독추천 서비스 프로젝트 생성 | [Link](#)  |
+|      | 빌드 스크립트 작성 | build.gradle 작성 | [Link](#)  |
+| Biz 프로젝트 개발 | Usecase, Service, Domain 클래스 개발 | Biz 프로젝트의 클래스 복사 | [Link](#)  |
+| Infra 프로젝트 개발  | Main 클래스 개발 |  | [Link](#)  |
+|                     | 애플리케이션 설정 파일 작성 | application.yml 작성 | [Link](#)  |
+|                     | Config, Jwt, utilility 클래스 개발 | infra.common 패키지 복사 | [Link](#)  |
+|                     | DTO 클래스 개발 | infra.dto 패키지 복사 | [Link](#)  |
+|                     | Entity 클래스 개발 | infra.out.entity 패키지 복사 | [Link](#)  |
+|                     | Repository 클래스 개발 | infra.out.repo 패키지 복사 | [Link](#)  |
+|                     | Exception 처리 클래스 개발 | infra.exception 패키지 복사 | [Link](#)  |
+|                     | Controller 클래스 개발 | infra.in.web 패키지 하위에 개발 | [Link](#)  |
+|                     | Gateway 클래스 개발 | infra.out.adapter 패키지 하위에 개발 | [Link](#)  |
+| 테스트 | Swagger 테스트 | Swagger에서 API 테스트 | [Link](#)  |
+| 소스 저장 | Git 푸시 | Gig에 소스 저장 | [Link](#)  |
+
 > **개발 순서**   
 > - 프로젝트 생성  
 > - subrecommend-biz 프로젝트 복사   

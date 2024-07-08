@@ -1,5 +1,15 @@
 # 회원관리 서비스 개발(1) 
 
+## 아키텍처 설계 결과 
+
+- **Class 설계**    
+  ![class](./images/class_member.svg)   
+
+
+- **Sequence 설계**
+  ![sequence](./images/sequence.svg)    
+
+## 패키지 구조 
 회원관리 서비스의 패키지 구조는 아래와 같습니다.    
 클린아키텍처를 더 잘 적용하기 위하여 biz와 infra프로젝트를 나누었습니다.   
 biz프로젝트는 애플리케이션 본연의 수행이 있고,   
