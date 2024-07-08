@@ -92,12 +92,12 @@ com.subride
   - [회원 프로젝트의 build.gradle 설정](#회원-프로젝트의-buildgradle-설정)
   - [common 프로젝트 복사](#common-프로젝트-복사)
   - [biz 프로젝트 클래스 복사](#biz-프로젝트-클래스-복사)
+  - [애플리케이션 설정 파일 작성](#애플리케이션-설정-파일-작성)
+  - [Main 프로그램 개발](#main-프로그램-개발)
   - [회원 가입 Controller 개발](#회원-가입-controller-개발)
   - [Output Adapter 클래스 개발](#output-adapter-클래스-개발)
   - [Security Config](#security-config)
   - [Swagger Config](#swagger-config)
-  - [애플리케이션 설정 파일 작성](#애플리케이션-설정-파일-작성)
-  - [Main 프로그램 개발](#main-프로그램-개발)
   - [회원등록 테스트](#회원등록-테스트)
   - [Tip](#tip)
 
@@ -115,13 +115,11 @@ com.subride
 |  | member 프로젝트 추가 | biz와 infra 프로젝트 추가 |
 | build.gradle | 최상위 프로젝트 | 최상위 프로젝트 manifest 작성 |
 |  | Member 프로젝트 | biz와 infra 프로젝트 manifest 작성 |
-|Biz 레이어 개발 | Usecase, Service, Domain | biz 프로젝트 복사 |
-|Biz 레이어 개발 | Usecase, Service, Domain | biz 프로젝트 복사 |
-
-
-
-
-
+|Biz 프로젝트 개발 | Usecase, Service, Domain | biz 프로젝트 복사 |
+|Infra 프로젝트 개발 | Controller 개발 | API 개발 |
+| | Gateway 개발 | Output Adapter 개발 |
+| Config클래스 개발 | Security Config | 웹 보안, 인증/인가 보안 설정 |
+|  | Swagger Config | API 문서화 설정 |
 
 
 ## 프로젝트 생성
@@ -519,15 +517,73 @@ IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니
     }
     ```    
 
+## 애플리케이션 설정 파일 작성   
+- 소스와 설정 디렉토리 생성     
+    infra프로젝트에 src/main/java디렉토리와 src/main/resources 디렉토리를 생성 합니다.    
+    java디렉토리는 패키지와 클래스가 위치할 디렉토리이고,  
+    resources 디렉토리는 애플리케이션 설정 파일을 생성할 디렉토리입니다.   
+    ![alt text](./images/image-8.png)    
+    ![alt text](./images/image-9.png)    
+    ![alt text](./images/image-10.png)    
+
+- application.yml 작성
+    member-infra프로젝트의 src/main/resources디렉토리에 application.yml 파일을 만듭니다.   
+    ![alt text](./images/image-29.png)    
+    ![alt text](./images/image-30.png)    
+
+    클론 프로젝트의 동일 위치에 있는 application.yml의 내용을 복사-붙여넣기 합니다.  
+
+    ```
+    server:
+    port: ${SERVER_PORT:18080}    #애플리케이션 실행 포트. SERVER_PORT라는 환경변수값을 읽고 없으면 18080으로 지정함  
+    spring:
+    application:
+        name: ${SPRING_APPLICATION_NAME:member-service}
+    datasource:                   #DB연결 정보 설정
+        driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}    #mysql driver
+        url: ${DB_URL:jdbc:mysql://localhost:3306/member?serverTimezone=Asia/Seoul} #접속 주소. 로컬에 3306포트로 실행된 mysql 컨테이너와 연결
+        username: ${DB_USERNAME:root}   
+        password: ${DB_PASSWORD:P@ssw0rd$}
+    jpa:                          #JPA설정
+        database: mysql
+        database-platform: org.hibernate.dialect.MySQLDialect
+        show-sql: ${JPA_SHOW_SQL:false}                 # 자동생성된 SQL 표시 여부
+        hibernate:
+        ddl-auto: ${JPA_HIBERNATE_DDL_AUTO:update}    # Entity클래스에서 변경 시 테이블 스키마를 업데이트 함
+        properties:
+        hibernate:
+            format_sql: ${JPA_HIBERNATE_FORMAT_SQL:true}    # 표시되는 SQL의 format을 가독성 있게 바꿀지 여부 
+    springdoc:                      # Swagger 설정
+    swagger-ui:
+        path: /swagger-ui.html      # Swagger 주소 지정. http://{host}:{port}/swagger-ui/index.html이 기본값임   
+
+    jwt:                            # JWT의 토큰 생성 Secret key, Access Token만료시간, Refresh 토큰 만료 시간 - 회원등록시엔 미사용 
+    secret: ${JWT_SECRET:8O2HQ13etL2BWZvYOiWsJ5uWFoLi6NBUG8divYVoCgtHVvlk3dqRksMl16toztDUeBTSIuOOPvHIrYq11G2BwQ==}
+    expiration-time: ${JWT_EXPIRATION_TIME:3600}
+    refresh-token-expiration-time: ${REFRESH_TOKEN_EXPIRATION_TIME:36000}
+
+    # Logging
+    logging:
+    level:
+        root: INFO
+        com.subride.member.infra.in: DEBUG      #로깅 수준은 상세한 순으로 DUBUG, INFO, WARN, ERROR가 있음   
+        com.subride.member.infra.out: DEBUG
+    ```
+
+## Main 프로그램 개발  
+애플리케이션 실행 시 제일 처음 실행되는 메인 프로그램을 개발합니다.   
+패키지 com.subride.member을 만들고 MemberApplication 클래스를 추가 합니다.   
+
+```
+@SpringBootApplication
+public class MemberApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MemberApplication.class, args);
+    }
+}
+```
 
 ## 회원 가입 Controller 개발
-- 소스와 설정 디렉토리 생성     
-infra프로젝트에 src/main/java디렉토리와 src/main/resources 디렉토리를 생성 합니다.    
-java디렉토리는 패키지와 클래스가 위치할 디렉토리이고,  
-resources 디렉토리는 애플리케이션 설정 파일을 생성할 디렉토리입니다.   
-![alt text](./images/image-8.png)    
-![alt text](./images/image-9.png)    
-![alt text](./images/image-10.png)    
 
 - AuthController, AuthControllerHelper 클래스 복사    
 java디렉토리에 패키지 'com.subride.member.infra'를 만듭니다.   
@@ -875,74 +931,6 @@ API문서화에 사용되는 Swagger의 환경설정 클래스를 만듭니다.
         }
     }
     ```
-
-## 애플리케이션 설정 파일 작성   
-member-infra프로젝트의 src/main/resources디렉토리에 application.yml 파일을 만듭니다.   
-    ![alt text](./images/image-29.png)    
-    ![alt text](./images/image-30.png)    
-
-클론 프로젝트의 동일 위치에 있는 application.yml의 내용을 복사-붙여넣기 합니다.  
-
-```
-server:
-  port: ${SERVER_PORT:18080}    #애플리케이션 실행 포트. SERVER_PORT라는 환경변수값을 읽고 없으면 18080으로 지정함  
-spring:
-  application:
-    name: ${SPRING_APPLICATION_NAME:member-service}
-  datasource:                   #DB연결 정보 설정
-    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}    #mysql driver
-    url: ${DB_URL:jdbc:mysql://localhost:3306/member?serverTimezone=Asia/Seoul} #접속 주소. 로컬에 3306포트로 실행된 mysql 컨테이너와 연결
-    username: ${DB_USERNAME:root}   
-    password: ${DB_PASSWORD:P@ssw0rd$}
-  jpa:                          #JPA설정
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQLDialect
-    show-sql: ${JPA_SHOW_SQL:false}                 # 자동생성된 SQL 표시 여부
-    hibernate:
-      ddl-auto: ${JPA_HIBERNATE_DDL_AUTO:update}    # Entity클래스에서 변경 시 테이블 스키마를 업데이트 함
-    properties:
-      hibernate:
-        format_sql: ${JPA_HIBERNATE_FORMAT_SQL:true}    # 표시되는 SQL의 format을 가독성 있게 바꿀지 여부 
-springdoc:                      # Swagger 설정
-  swagger-ui:
-    path: /swagger-ui.html      # Swagger 주소 지정. http://{host}:{port}/swagger-ui/index.html이 기본값임   
-
-jwt:                            # JWT의 토큰 생성 Secret key, Access Token만료시간, Refresh 토큰 만료 시간 - 회원등록시엔 미사용 
-  secret: ${JWT_SECRET:8O2HQ13etL2BWZvYOiWsJ5uWFoLi6NBUG8divYVoCgtHVvlk3dqRksMl16toztDUeBTSIuOOPvHIrYq11G2BwQ==}
-  expiration-time: ${JWT_EXPIRATION_TIME:3600}
-  refresh-token-expiration-time: ${REFRESH_TOKEN_EXPIRATION_TIME:36000}
-
-# Logging
-logging:
-  level:
-    root: INFO
-    com.subride.member.infra.in: DEBUG      #로깅 수준은 상세한 순으로 DUBUG, INFO, WARN, ERROR가 있음   
-    com.subride.member.infra.out: DEBUG
-```
-
-## Main 프로그램 개발  
-애플리케이션 실행 시 제일 처음 실행되는 메인 프로그램을 개발합니다.   
-com.subride.member.infra 패키지 밑에 MemberApplication 클래스를 추가 합니다.   
-```
-@SpringBootApplication
-public class MemberApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(MemberApplication.class, args);
-    }
-}
-```
-
-- MemberApplication을 com.subride.member패키지 밑으로 옮깁니다.   
-이 메인 프로그램은 com.subride.member.member-biz와 com.subride.member.member-infra의    
-모든 클래스 상위에 있어야 하므로 옮겨야 합니다.   
-작성한 MemberApplication을 drag하여 java디렉토리에 떨굽니다.    
-이동창에서 패키지명을 com.subride.member로 지정합니다.
-그리고 하단의 Refactor 버튼을 누릅니다.   
-![alt text](./images/image-33.png)    
-
-아래와 같이 infra패키지와 같은 레벨로 이동되어야 합니다.    
-![alt text](./images/image-34.png)
-
 
 ## 회원등록 테스트   
 여기까지 한 후 에러가 나는 클래스가 없는지 체크 합니다.   
