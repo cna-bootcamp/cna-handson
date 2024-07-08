@@ -3,11 +3,11 @@
 ## 아키텍처 설계 결과 
 
 - **Class 설계**    
-  ![class](./images/class_subrecommend.svg)   
+  ![class](class_subrecommend.svg)   
 
 
 - **Sequence 설계**
-  ![sequence](./images/sequence.svg)    
+  ![sequence](sequence.svg)    
 
 
 ## 패키지 구조  
