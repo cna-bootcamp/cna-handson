@@ -91,8 +91,8 @@ com.subride
   - [최상위 프로젝트의 build.gradle 셋팅](#최상위-프로젝트의-buildgradle-셋팅)
   - [회원 프로젝트의 build.gradle 설정](#회원-프로젝트의-buildgradle-설정)
   - [common 프로젝트 복사](#common-프로젝트-복사)
-  - [회원 가입 Controller 개발](#회원-가입-controller-개발)
   - [biz 프로젝트 클래스 복사](#biz-프로젝트-클래스-복사)
+  - [회원 가입 Controller 개발](#회원-가입-controller-개발)
   - [Output Adapter 클래스 개발](#output-adapter-클래스-개발)
   - [Security Config](#security-config)
   - [Swagger Config](#swagger-config)
@@ -111,6 +111,10 @@ com.subride
 | 생성/설정 | 프로젝트 생성 | 새로운 프로젝트를 생성합니다. |
 |  | Lombok 설치 | 생성자, Getter, Setter 유틸리티 |
 |  | IntelliJ 환경 설정 | Import 라이브러리, 오타 검사 등 설정 |
+| 프로젝트 추가 | common 프로젝트 복사 | 공통모듈 클래스 복사 |
+|  | member 프로젝트 추가 | biz와 infra 프로젝트 추가 |
+| build.gradle | 최상위 프로젝트 | 최상위 프로젝트 manifest 작성 |
+|  | Member 프로젝트 | biz와 infra 프로젝트 manifest 작성 |
 |Biz 레이어 개발 | Usecase, Service, Domain | biz 프로젝트 복사 |
 |Biz 레이어 개발 | Usecase, Service, Domain | biz 프로젝트 복사 |
 
@@ -435,6 +439,87 @@ configure(subprojects.findAll { it.name.endsWith('-biz') }) {
 
 ---
 
+## biz 프로젝트 클래스 복사  
+IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니다.  
+- member-biz 프로젝트에 java 디렉토리에 생성   
+    member-biz/src를 선택하고 우측 마우스 버튼으로 새 디렉토리 생성    
+    main/java 라고 입력하여 생성    
+    
+- member-biz 프로젝트의 class 복사   
+    클론 프로젝트의 member-biz/src/main/java밑에 있는 com.subride.member.biz에 커서를 놓고 CTRL-c로 복사합니다.  
+    개발 프로젝트의 member-biz/src/main/java 디렉토리를 선택하고 붙여넣기 합니다.   
+    아래와 같이 New name에 패키지명을 정확하게 지정합니다.    
+    ![alt text](./images/image-15.png)    
+
+    아래와 같이 패키지 구조와 클래스들이 복사되어야 합니다.   
+    ![alt text](./images/image-18.png)
+  
+- domain 클래스: Account, Member   
+    비즈니스 로직을 구현하는 핵심 클래스입니다.  
+    예제에서는 특별한 비즈니스 로직은 Member클래스의 canbeAccessed()메소드 밖에 없습니다.    
+    user99는 접근을 금지하는 로직을 예제로 구현해 놨습니다.   
+
+    > **Lombok의 @Getter, @Setter 확인하기**   
+    > Lombok은 @Getter, @Setter 어노테이션이 있으면 자동으로 Getter, Setter메소드를 만듭니다.   
+    > 진짜 그런지 확인하려면 Account클래스를 선택하고 Alt-7(Mac은 Option-7)을 눌러   
+    > Structure창을 열어 보십시오. 아래와 같이 메소드가 자동 생성된걸 확인할 수 있습니다.    
+    > ![alt text](./images/image-19.png)
+
+- inport usecase: IAuthServer    
+    Member서비스의 애플리케이션 로직을 정의한 인터페이스 객체입니다.    
+    실제 구현은 AuthServiceImpl클래스에서 합니다.   
+    ```
+    public interface IAuthService {
+        void signup(Member member, Account account);
+        Member login(String userId, String password);
+
+        boolean validateMemberAccess(Member member);     //-- 접근 허용 정책 결정
+    }
+    ```
+
+- service: AuthServiceImpl       
+    inport usecase에서 정의한 메소드를 실제 구현한 클래스입니다.    
+
+    ```
+    @Service                    //Service레이어의 클래스임을 나타내고 Bin클래스로 실행시 객체가 자동 생성됨  
+    @RequiredArgsConstructor    //Lombok: 프라퍼티를 인자로 갖는 생성자 메소드 자동 생성  
+    public class AuthServiceImpl implements IAuthService {
+        private final IAuthProvider authProvider;   //외부 기술/툴과의 인터페이스를 정의한 객체를 참조함  
+
+        @Override   //인터페이스에 정의한 메소드를 덮어서 재정의하므로 @Override 어노테이션 사용   
+        public Member login(String userId, String password) {
+            return authProvider.validateAuth(userId, password);
+        }
+
+        @Override
+        public void signup(Member member, Account account) {
+            //-- profile image 번호를 생성
+            member.setCharacterId((int) (Math.random() * 4) + 1);   //사용자의 캐릭터 번호를 생성
+
+            authProvider.signup(member, account);
+        }
+
+        @Override
+        public boolean validateMemberAccess(Member member) {
+            return member.canbeAccessed();      //Member도메인 객체의 비즈니스 로직을 호출하여 접근 가능 여부 검사  
+        }
+    }
+
+    ```    
+
+- outport usecase: IAuthProvider     
+    애플리케이션 서비스가 외부 기술/툴과 인터페이스 하기 위해 필요한 메소드를 정의한 인터페이스입니다.   
+    실제 구현은 infra프로젝트의 out adapter레이어에서 하게 됩니다.  
+    ```
+    public interface IAuthProvider {
+        Member validateAuth(String userId, String password);
+
+        void signup(Member member, Account account);
+
+    }
+    ```    
+
+
 ## 회원 가입 Controller 개발
 - 소스와 설정 디렉토리 생성     
 infra프로젝트에 src/main/java디렉토리와 src/main/resources 디렉토리를 생성 합니다.    
@@ -542,85 +627,7 @@ infra 밑에 in.web 패키지를 만듭니다.
     개발 프로젝트에 com.subride.member.infra.common.dto패키지를 만들고,   
     클론 프로젝트에서 동일 패키지 하위에 있는 SignupRequestDTO클래스를 복사합니다.   
 
-## biz 프로젝트 클래스 복사  
-IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니다.  
-- member-biz 프로젝트에 java 디렉토리에 생성   
-    member-biz/src를 선택하고 우측 마우스 버튼으로 새 디렉토리 생성    
-    main/java 라고 입력하여 생성    
-    
-- member-biz 프로젝트의 class 복사   
-    클론 프로젝트의 member-biz/src/main/java밑에 있는 com.subride.member.biz에 커서를 놓고 CTRL-c로 복사합니다.  
-    개발 프로젝트의 member-biz/src/main/java 디렉토리를 선택하고 붙여넣기 합니다.   
-    아래와 같이 New name에 패키지명을 정확하게 지정합니다.    
-    ![alt text](./images/image-15.png)    
-
-    아래와 같이 패키지 구조와 클래스들이 복사되어야 합니다.   
-    ![alt text](./images/image-18.png)
-  
-- domain 클래스: Account, Member   
-    비즈니스 로직을 구현하는 핵심 클래스입니다.  
-    예제에서는 특별한 비즈니스 로직은 Member클래스의 canbeAccessed()메소드 밖에 없습니다.    
-    user99는 접근을 금지하는 로직을 예제로 구현해 놨습니다.   
-
-    > **Lombok의 @Getter, @Setter 확인하기**   
-    > Lombok은 @Getter, @Setter 어노테이션이 있으면 자동으로 Getter, Setter메소드를 만듭니다.   
-    > 진짜 그런지 확인하려면 Account클래스를 선택하고 Alt-7(Mac은 Option-7)을 눌러   
-    > Structure창을 열어 보십시오. 아래와 같이 메소드가 자동 생성된걸 확인할 수 있습니다.    
-    > ![alt text](./images/image-19.png)
-
-- inport usecase: IAuthServer    
-    Member서비스의 애플리케이션 로직을 정의한 인터페이스 객체입니다.    
-    실제 구현은 AuthServiceImpl클래스에서 합니다.   
-    ```
-    public interface IAuthService {
-        void signup(Member member, Account account);
-        Member login(String userId, String password);
-
-        boolean validateMemberAccess(Member member);     //-- 접근 허용 정책 결정
-    }
-    ```
-
-- service: AuthServiceImpl       
-    inport usecase에서 정의한 메소드를 실제 구현한 클래스입니다.    
-
-    ```
-    @Service                    //Service레이어의 클래스임을 나타내고 Bin클래스로 실행시 객체가 자동 생성됨  
-    @RequiredArgsConstructor    //Lombok: 프라퍼티를 인자로 갖는 생성자 메소드 자동 생성  
-    public class AuthServiceImpl implements IAuthService {
-        private final IAuthProvider authProvider;   //외부 기술/툴과의 인터페이스를 정의한 객체를 참조함  
-
-        @Override   //인터페이스에 정의한 메소드를 덮어서 재정의하므로 @Override 어노테이션 사용   
-        public Member login(String userId, String password) {
-            return authProvider.validateAuth(userId, password);
-        }
-
-        @Override
-        public void signup(Member member, Account account) {
-            //-- profile image 번호를 생성
-            member.setCharacterId((int) (Math.random() * 4) + 1);   //사용자의 캐릭터 번호를 생성
-
-            authProvider.signup(member, account);
-        }
-
-        @Override
-        public boolean validateMemberAccess(Member member) {
-            return member.canbeAccessed();      //Member도메인 객체의 비즈니스 로직을 호출하여 접근 가능 여부 검사  
-        }
-    }
-
-    ```    
-
-- outport usecase: IAuthProvider     
-    애플리케이션 서비스가 외부 기술/툴과 인터페이스 하기 위해 필요한 메소드를 정의한 인터페이스입니다.   
-    실제 구현은 infra프로젝트의 out adapter레이어에서 하게 됩니다.  
-    ```
-    public interface IAuthProvider {
-        Member validateAuth(String userId, String password);
-
-        void signup(Member member, Account account);
-
-    }
-    ```    
+---
 
 ## Output Adapter 클래스 개발  
 outport usecase에 정의한 메소드를 처리하기 위한 Output Adapter 클래스를 개발합니다.  
