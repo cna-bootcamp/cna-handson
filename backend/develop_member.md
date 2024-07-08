@@ -136,6 +136,10 @@ Monorepo패턴을 적용한 프로젝트는 여러개의 프로젝트로 구성�
   아래 설정을 먼저하고 새 프로젝트를 오픈 하십시오.    
   ![alt text](./images/image.png)
 
+| [Top](#개발-순서) |
+
+---
+
 ## 생성/설정 > Lombok설치
 Lombok은 클래스의 생성자, Getter(프라퍼티값을 읽는 메소드), Setter(프라퍼티값을 변경하는 메소드)등을    
 자동으로 작성해 주는 라이브러리입니다.    
@@ -150,6 +154,11 @@ Lombok을 사용하면 어노테이션만 지정하면 이러한 메소드들을
     멀티프로젝트는 최상위 프로젝트 생성하고 한번 하면 됩니다.        
     ![alt text](./images/image-6.png)
 
+| [Top](#개발-순서) |
+
+---
+
+
 ## 생성/설정 > IntelliJ 환경 설정
 - 라이브러리 자동 import 옵션    
     첫번째 옵션은 코드 작성 중 필요한 라이브러리를 자동 import해 주는 것이고,   
@@ -159,6 +168,10 @@ Lombok을 사용하면 어노테이션만 지정하면 이러한 메소드들을
     코드나 주석에 오타를 체크해 주는 옵션입니다.   
     활성화 되어 있으면 컴파일 Warning갯수가 자꾸 보여서 눈에 거슬립니다.   
     ![alt text](./images/image-22.png)
+
+| [Top](#개발-순서) |
+
+---
 
 ## 프로젝트 추가 > common 프로젝트 복사 
 - common 디렉토리 복사  
@@ -240,6 +253,10 @@ Lombok을 사용하면 어노테이션만 지정하면 이러한 메소드들을
     > CommonUtils.createSuccessResponse(200, "회원정보", memberInfoDTO);
     > ```
 
+| [Top](#개발-순서) |
+
+---
+
 ## 프로젝트 추가 > member 프로젝트 추가   
 - member 프로젝트 추가  
     IntelliJ는 다른 IDE에 없는 하위 모듈 추가 기능이 있습니다.   
@@ -257,6 +274,10 @@ Lombok을 사용하면 어노테이션만 지정하면 이러한 메소드들을
     include 'member:member-biz'
     include 'member:member-infra'
     ```
+
+| [Top](#개발-순서) |
+
+---
 
 ## 빌드 스크립트 작성 > 최상위 프로젝트 빌드 스크립트  
 build.gradle은 애플리케이션의 기본정보와 라이브러리등을 정의한 파일입니다.   
@@ -392,6 +413,11 @@ configure(subprojects.findAll { it.name.endsWith('-biz') }) {
 }
 ```
 
+| [Top](#개발-순서) |
+
+---
+
+
 ## 빌드 스크립트 작성 > Member 프로젝트 빌드 스크립트
 
 - member-biz 프로젝트의 build.gralde 복사  
@@ -410,6 +436,11 @@ configure(subprojects.findAll { it.name.endsWith('-biz') }) {
         implementation project(':member:member-biz')
     }
     ```    
+
+| [Top](#개발-순서) |
+
+---
+
 
 ## Biz 프로젝트 개발 > Usecase, Service, Domain 레이어 개발   
 IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니다.  
@@ -491,6 +522,10 @@ IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니
     }
     ```    
 
+| [Top](#개발-순서) |
+
+---
+
 ## Infra 프로젝트 개발 > 애플리케이션 설정 파일 작성   
 - 소스와 설정 디렉토리 생성     
     infra프로젝트에 src/main/java디렉토리와 src/main/resources 디렉토리를 생성 합니다.    
@@ -544,9 +579,16 @@ IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니
         com.subride.member.infra.out: DEBUG
     ```
 
+| [Top](#개발-순서) |
+
+---
+
 ## Infra 프로젝트 개발 > Main 프로그램 개발  
 애플리케이션 실행 시 제일 처음 실행되는 메인 프로그램을 개발합니다.   
 패키지 com.subride.member을 만들고 MemberApplication 클래스를 추가 합니다.   
+member-infra/src/main/java를 선택하고, 우측 마우스 메뉴에서 New > Package를 선택 합니다.   
+생성된 패키지를 선택하고, 우측 마우스 메뉴에서 New > Java Class를 선택합니다. 
+Class명을 MemberApplication으로 입력합니다.   
 
 ```
 @SpringBootApplication
@@ -556,6 +598,10 @@ public class MemberApplication {
     }
 }
 ```
+
+| [Top](#개발-순서) |
+
+---
 
 ## Infra 프로젝트 개발 > Controller 개발
 
@@ -657,6 +703,9 @@ infra 밑에 in.web 패키지를 만듭니다.
     개발 프로젝트에 com.subride.member.infra.common.dto패키지를 만들고,   
     클론 프로젝트에서 동일 패키지 하위에 있는 SignupRequestDTO클래스를 복사합니다.   
 
+| [Top](#개발-순서) |
+
+---
 
 ## Infra 프로젝트 개발 > Gateway 개발  
 outport usecase에 정의한 메소드를 처리하기 위한 Output Adapter 클래스를 개발합니다.  
@@ -783,6 +832,10 @@ outport usecase에 정의한 메소드를 처리하기 위한 Output Adapter 클
     JPA를 이용하여 저장합니다.  
     이때 암호는 passwordEncoder를 써서 단방향(평문으로 다시 변환 못함)으로 암호화하여 저장합니다.   
 
+| [Top](#개발-순서) |
+
+---
+
 ## Config 클래스 개발 > Security Config 
 Security Config는 인증 처리를 위해 필요합니다.  
 아직 인증 처리가 필요 없지만 CORS(도메인이 다른 프론트엔드에서 접근),    
@@ -878,6 +931,10 @@ public class SecurityConfig {
 }
 ```
 
+| [Top](#개발-순서) |
+
+---
+
 ## Config 클래스 개발 > Swagger Config
 API문서화에 사용되는 Swagger의 환경설정 클래스를 만듭니다.    
 개발 프로젝트에 com.subride.member.infra.common.config패키지를 만듭니다.    
@@ -904,6 +961,10 @@ API문서화에 사용되는 Swagger의 환경설정 클래스를 만듭니다.
         }
     }
     ```
+
+| [Top](#개발-순서) |
+
+---
 
 ## 테스트 > 회원등록 테스트   
 여기까지 한 후 에러가 나는 클래스가 없는지 체크 합니다.   
@@ -956,6 +1017,8 @@ Request body에 아래 예와 같이 값을 입력합니다.
 아래로 내려 Server response에 아래와 같이 나오면 성공입니다.   
 ![alt text](./images/image-37.png)
 
+| [Top](#개발-순서) |
+
 ---
 
 ## Tip
@@ -964,5 +1027,3 @@ Request body에 아래 예와 같이 값을 입력합니다.
   IntelliJ에서는 잘 발생 안하지만 아주 가끔 로컬 캐싱으로 문제가 없는데 컴파일이 안되는 경우가 있습니다.    
   이때는 아래와 같이 로컬 캐시를 전부 지우고, 다시 만들면 해결됩니다.    
   ![alt text](./images/image-17.png)
-
-
