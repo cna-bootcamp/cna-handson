@@ -92,6 +92,10 @@
     개발 프로젝트의 com.subride.member.infra.common 패키지 하위에 붙여 넣습니다.   
     이미 있는 클래스는 덮어 씁니다.   
 
+| [Top](#개발-순서) |
+
+---
+
 ## 인증 개발 > SecurityConfig클래스 수정   
     
   아래와 같이 Class명 하위에 JwtTokenProvider와 CustomUserDetailsService 객체가 생성되도록 합니다.   
@@ -134,6 +138,10 @@
         return http.build();
     }
     ```
+
+| [Top](#개발-순서) |
+
+---
 
 ## 로깅 > Logging 공통모듈 추가   
 자동으로 로깅이 되도록 하는 공통모듈을 추가합니다.   
@@ -192,6 +200,10 @@ public class LoggingAspect {
 Swagger페이지에서 회원등록 테스트를 하고 콘솔을 확인해 보십시오.   
 >  **Tip**: 테스트 시 동일한 데이터로 하셔도 됩니다. 동일키 데이터는 업데이트 합니다.   
 ![alt text](./images/image-38.png)   
+
+| [Top](#개발-순서) |
+
+---
 
 ## API 개발 > 로그인 API 추가  
 - AuthController, AuthControllerHelper 수정  
@@ -272,6 +284,10 @@ Swagger페이지에서 회원등록 테스트를 하고 콘솔을 확인해 보�
     아래와 같이 결과가 나오면 성공입니다.  
     ![alt text](./images/image-41.png)
 
+| [Top](#개발-순서) |
+
+---
+
 ## API 개발 > 인증 토큰 검증, 인증 토큰 갱신 API 추가  
 클론 프로젝트에서 소스를 복사하고, 흐름을 따라 가면서 코드를 이해해 보세요.   
 
@@ -284,6 +300,10 @@ Swagger페이지에서 회원등록 테스트를 하고 콘솔을 확인해 보�
 애플리케이션을 재시작하고, 이번엔 프론트엔드 앱에서 로그인이 되는지 확인합니다.   
 
 로그인이 잘 되고 메인화면에 로그인한 사용자의 정보가 나오면 성공입니다.  
+
+| [Top](#개발-순서) |
+
+---
 
 ## API 개발 > 회원 API 추가  
 클론 프로젝트의 MemberController와 MemberControllerHelper를 복사합니다.  
@@ -305,6 +325,10 @@ public class MemberController {
     private final MemberControllerHelper memberControllerHelper;
 
 ```
+
+| [Top](#개발-순서) |
+
+---
 
 ## 테스트 > 회원 API 테스트 
 
@@ -354,6 +378,8 @@ Swagger페이지에서 우측 마우스 버튼을 누르고 맨 아래의 '검�
 인증 토큰 값이 'Bearer'로 시작되는것을 볼 수 있습니다.   
 ![alt text](./images/image-52.png)
 
+| [Top](#개발-순서) |
+
 ---
 
 ## 소스 저장 > Git 저장소 생성 및 소스 업로드   
@@ -402,6 +428,7 @@ Swagger페이지에서 우측 마우스 버튼을 누르고 맨 아래의 '검�
 - 확인  
     github.com에서 잘 푸시되었는지 소스와 태그를 확인 합니다.  
 
+---
 ---
 
 지금까지 회원관리 서비스를 클론코딩 방식으로 개발했습니다.   
