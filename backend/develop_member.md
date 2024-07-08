@@ -109,7 +109,7 @@ com.subride
 | Group               | Task                          | Description                            | Link |
 | :------------------ | :---------------------------- | :------------------------------------- |:----|
 | 생성/설정           | 프로젝트 생성                 | 새로운 프로젝트를 생성합니다.          |[Link](#프로젝트-생성)|
-|                     | Lombok 설치                   | 생성자, Getter, Setter 유틸리티        |[Lik](#lombok설치-및-활성화)|
+|                     | Lombok 설치                   | 생성자, Getter, Setter 유틸리티        |[Link](#lombok설치-및-활성화)|
 |                     | IntelliJ 환경 설정            | Import 라이브러리, 오타 검사 등 설정   |[Link](#intellij-환경-설정)|
 | 프로젝트 추가       | common 프로젝트 복사          | 공통모듈 클래스 복사                   |[Link](#common-프로젝트-복사)|
 |                     | member 프로젝트 추가          | biz와 infra 프로젝트 추가              |[Link](#member-프로젝트-추가)|
