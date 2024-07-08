@@ -285,7 +285,7 @@ Node.js계열의 언어(React, view.js등)에서의 package.json과 동일한 �
 컴파일러로 maven을 사용할때는 pom.xml에 XML형식으로 정의해야 합니다.    
 gradle을 점점 더 많이 쓰는 이유는 build.gradle에 정의하는 것이 훨씬 간단하고,   
 컴파일 속도도 더 빠르기 때문입니다.   
-클론 프로젝트의 build.gradle파일 내용을 복사-붙여넣기 하세요.   
+**클론 프로젝트의 최상위 디렉토리에 있는 build.gradle파일 내용을 복사-붙여넣기** 하세요.   
 
 - plugins
     java와 spring boot 플러그인을 지정합니다.   
@@ -443,7 +443,7 @@ configure(subprojects.findAll { it.name.endsWith('-biz') }) {
 
 
 ## Biz 프로젝트 개발 > Usecase, Service, Domain 레이어 개발   
-IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니다.  
+biz프로젝트들의 소스는 한꺼번에 복사합니다.  
 - member-biz 프로젝트에 java 디렉토리에 생성   
     member-biz/src를 선택하고 우측 마우스 버튼으로 새 디렉토리 생성    
     main/java 라고 입력하여 생성    
@@ -528,7 +528,7 @@ IAuthService를 포함 biz프로젝트들의 소스는 한꺼번에 복사합니
 
 ## Infra 프로젝트 개발 > 애플리케이션 설정 파일 작성   
 - 소스와 설정 디렉토리 생성     
-    infra프로젝트에 src/main/java디렉토리와 src/main/resources 디렉토리를 생성 합니다.    
+    infra프로젝트에 **src/main/java디렉토리와 src/main/resources 디렉토리를 생성** 합니다.    
     java디렉토리는 패키지와 클래스가 위치할 디렉토리이고,  
     resources 디렉토리는 애플리케이션 설정 파일을 생성할 디렉토리입니다.   
     ![alt text](./images/image-8.png)    
