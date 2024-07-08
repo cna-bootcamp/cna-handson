@@ -11,7 +11,7 @@
 
 
 ## Clauding 프롬프트  
-**클로딩(Clauding)**이라는 말은 제가 만든 말로 구글링처럼 **Claude를 활용하여 원하는 것을 얻는다**는 의미입니다.
+**Clauding**이라는 말은 제가 만든 말로 구글링처럼 **Claude를 활용하여 원하는 것을 얻는다**는 의미입니다.   
 설계 결과를 클로딩하여 개발하는 프롬프트는 아래와 같습니다. 
 
 ```
@@ -44,9 +44,10 @@
 > backend/mergesrc.py를 최상위 디렉토리에 복사합니다.   
 > 사용전에 python을 설치 합니다.    
 > 터미널에서 아래 명령으로 소스를 한 파일로 통합합니다.     
-> python mergesrc.py
+> python mergesrc.py   
 > ※ Mac은 python3 mergesrc.py    
 > 통합파일은 MergedSource.java라는 이름으로 최상위 디렉토리에 생성됩니다.   
+> ![alt text](./images/mergesrc.png)
 
 ## 패키지 구조 
 회원관리 서비스의 패키지 구조는 아래와 같습니다.    
