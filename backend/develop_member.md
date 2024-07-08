@@ -87,10 +87,10 @@ com.subride
   - [프로젝트 생성](#프로젝트-생성)
   - [Lombok설치 및 활성화](#lombok설치-및-활성화)
   - [IntelliJ 환경 설정](#intellij-환경-설정)
-  - [common 프로젝트 복사](#common-프로젝트-복사)
   - [member 프로젝트 추가](#member-프로젝트-추가)
   - [최상위 프로젝트의 build.gradle 셋팅](#최상위-프로젝트의-buildgradle-셋팅)
   - [회원 프로젝트의 build.gradle 설정](#회원-프로젝트의-buildgradle-설정)
+  - [common 프로젝트 복사](#common-프로젝트-복사)
   - [회원 가입 Controller 개발](#회원-가입-controller-개발)
   - [biz 프로젝트 클래스 복사](#biz-프로젝트-클래스-복사)
   - [Output Adapter 클래스 개발](#output-adapter-클래스-개발)
@@ -110,7 +110,11 @@ com.subride
 | :-------- | :------------ | :---------------------------- |
 | 생성/설정 | 프로젝트 생성 | 새로운 프로젝트를 생성합니다. |
 |  | Lombok 설치 | 생성자, Getter, Setter 유틸리티 |
-|  | IntelliJ 환경 설정 | 생성자, Getter, Setter 유틸리티 |
+|  | IntelliJ 환경 설정 | Import 라이브러리, 오타 검사 등 설정 |
+|Biz 레이어 개발 | Usecase, Service, Domain | biz 프로젝트 복사 |
+|Biz 레이어 개발 | Usecase, Service, Domain | biz 프로젝트 복사 |
+
+
 
 
 
@@ -175,86 +179,6 @@ Lombok을 사용하면 어노테이션만 지정하면 이러한 메소드들을
     활성화 되어 있으면 컴파일 Warning갯수가 자꾸 보여서 눈에 거슬립니다.   
     ![alt text](./images/image-22.png)
 
-
-## common 프로젝트 복사 
-- common 디렉토리 복사  
-    공통 클래스를 만들 common프로젝트를 클론 프로젝트에서 복사하여 붙여넣기 합니다.   
-    클론 프로젝트의 common디렉토리를 선택하고 CTRL-c를 누른 후,   
-    개발 프로젝트에서 subride디렉토리를 선택한 후 CTRL-v를 누르면 됩니다.   
-    아래와 같이 common디렉토리가 생성되면 됩니다.    
-    ![alt text](./images/image-2.png)
-
-- settings.gradle에 common프로젝트 추가   
-    settings.gradle은 멀티 프로젝트에서 하위 모듈(프로젝트)을 관리하는 파일입니다.   
-    아래와 같이 common프로젝트를 추가하면 됩니다. 
-    ```
-    rootProject.name = 'subride'
-    include 'common'
-    ```   
-
-- common 프로젝트 클래스 설명  
-
-  - com.subride.common.dto.ResponseDTO    
-    이 클래스는 API의 응답 데이터를 만들때 사용되는 DTO(Data Transfer Object)클래스입니다.   
-    DTO는 여러 필드를 가지는 요청, 응답, 파라미터 객체를 만들때 사용합니다.  
-    응답 객체에는 응답코드, 응답 메시지, 응답 값 객체로 구성되어 있습니다.  
-    ```
-    @Getter
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public class ResponseDTO<T> {
-        private int code;
-        private String message;
-        private T response;
-    }
-    ```
-  - com.subride.common.util.CommonUtils 
-    모든 마이크로서비스에서 공통으로 사용할 메소드를 모아 놓은 클래스입니다.   
-    현재는 성공일때와 실패일때의 ResponseDTO객체를 만드는 메소드가 정의되어 있습니다.   
-    ```
-    public class CommonUtils {
-
-        //controller에서 성공 시 리턴 객체 반환
-        public static <T> ResponseDTO<T> createSuccessResponse(int code, String message, T response) {
-            return ResponseDTO.<T>builder()
-                    .code(code)
-                    .message(message)
-                    .response(response)
-                    .build();
-        }
-
-        //controller에서 실패 시 리턴 객체 반환
-        public static <T> ResponseDTO<T> createFailureResponse(int code, String message) {
-            return ResponseDTO.<T>builder()
-                    .code(code)
-                    .message(message)
-                    .build();
-        }
-    }
-    ```  
-    > **static 메소드**   
-    > 위 두 메소드는 static이라는 키워드를 사용하여 static메소드로 정의되어 있습니다.   
-    > static메소드가 아니면 아래와 같이 CommonUtils클래스의 객체를 만든 후 메소드를 호출해야 합니다.    
-    > ```
-    > CommonUtils commonUtils = new CommonUtils();
-    > commonUtils.createSuccessResponse(200, "Success", userInfo); 
-    > ```  
-    > CommonUtils는 공용 메소드를 모아 놓은 클래스이므로 굳이 객체를 만들 필요가 없습니다.   
-    > 이런 경우에 메소드를 바로 호출할 수 있도록 하기 위해 static 메소드를 만듭니다.   
-    > static 메소드는 아래와 같이 호출할 수 있습니다.    
-    > ```
-    > CommonUtils.createSuccessResponse(200, "Success", userInfo);
-    > ```
-
-    > **Generic type**    
-    > '\<T\>'라는 키워드는 유동적으로 객체의 Type이 바뀌는 방법을 보여줍니다.   
-    > 이렇게 미리 객체 Type을 지정하지 않고 실행 시에 결정하는 방법을 Generic type이라고 합니다.  
-    > 아래 예와 같이 호출할 때 Generic type으로 지정된 객체에는 어떤 type의 객체이든 사용할 수가 있습니다.      
-    > ```
-    > CommonUtils.createSuccessResponse(200, "로그인 성공", jwtTokenDTO);
-    > CommonUtils.createSuccessResponse(200, "회원정보", memberInfoDTO);
-    > ```
 
 ## member 프로젝트 추가   
 - member 프로젝트 추가  
@@ -426,6 +350,88 @@ configure(subprojects.findAll { it.name.endsWith('-biz') }) {
         implementation project(':member:member-biz')
     }
     ```    
+
+---
+
+## common 프로젝트 복사 
+- common 디렉토리 복사  
+    공통 클래스를 만들 common프로젝트를 클론 프로젝트에서 복사하여 붙여넣기 합니다.   
+    클론 프로젝트의 common디렉토리를 선택하고 CTRL-c를 누른 후,   
+    개발 프로젝트에서 subride디렉토리를 선택한 후 CTRL-v를 누르면 됩니다.   
+    아래와 같이 common디렉토리가 생성되면 됩니다.    
+    ![alt text](./images/image-2.png)
+
+- settings.gradle에 common프로젝트 추가   
+    settings.gradle은 멀티 프로젝트에서 하위 모듈(프로젝트)을 관리하는 파일입니다.   
+    아래와 같이 common프로젝트를 추가하면 됩니다. 
+    ```
+    rootProject.name = 'subride'
+    include 'common'
+    ```   
+
+- common 프로젝트 클래스 설명  
+
+  - com.subride.common.dto.ResponseDTO    
+    이 클래스는 API의 응답 데이터를 만들때 사용되는 DTO(Data Transfer Object)클래스입니다.   
+    DTO는 여러 필드를 가지는 요청, 응답, 파라미터 객체를 만들때 사용합니다.  
+    응답 객체에는 응답코드, 응답 메시지, 응답 값 객체로 구성되어 있습니다.  
+    ```
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public class ResponseDTO<T> {
+        private int code;
+        private String message;
+        private T response;
+    }
+    ```
+  - com.subride.common.util.CommonUtils 
+    모든 마이크로서비스에서 공통으로 사용할 메소드를 모아 놓은 클래스입니다.   
+    현재는 성공일때와 실패일때의 ResponseDTO객체를 만드는 메소드가 정의되어 있습니다.   
+    ```
+    public class CommonUtils {
+
+        //controller에서 성공 시 리턴 객체 반환
+        public static <T> ResponseDTO<T> createSuccessResponse(int code, String message, T response) {
+            return ResponseDTO.<T>builder()
+                    .code(code)
+                    .message(message)
+                    .response(response)
+                    .build();
+        }
+
+        //controller에서 실패 시 리턴 객체 반환
+        public static <T> ResponseDTO<T> createFailureResponse(int code, String message) {
+            return ResponseDTO.<T>builder()
+                    .code(code)
+                    .message(message)
+                    .build();
+        }
+    }
+    ```  
+    > **static 메소드**   
+    > 위 두 메소드는 static이라는 키워드를 사용하여 static메소드로 정의되어 있습니다.   
+    > static메소드가 아니면 아래와 같이 CommonUtils클래스의 객체를 만든 후 메소드를 호출해야 합니다.    
+    > ```
+    > CommonUtils commonUtils = new CommonUtils();
+    > commonUtils.createSuccessResponse(200, "Success", userInfo); 
+    > ```  
+    > CommonUtils는 공용 메소드를 모아 놓은 클래스이므로 굳이 객체를 만들 필요가 없습니다.   
+    > 이런 경우에 메소드를 바로 호출할 수 있도록 하기 위해 static 메소드를 만듭니다.   
+    > static 메소드는 아래와 같이 호출할 수 있습니다.    
+    > ```
+    > CommonUtils.createSuccessResponse(200, "Success", userInfo);
+    > ```
+
+    > **Generic type**    
+    > '\<T\>'라는 키워드는 유동적으로 객체의 Type이 바뀌는 방법을 보여줍니다.   
+    > 이렇게 미리 객체 Type을 지정하지 않고 실행 시에 결정하는 방법을 Generic type이라고 합니다.  
+    > 아래 예와 같이 호출할 때 Generic type으로 지정된 객체에는 어떤 type의 객체이든 사용할 수가 있습니다.      
+    > ```
+    > CommonUtils.createSuccessResponse(200, "로그인 성공", jwtTokenDTO);
+    > CommonUtils.createSuccessResponse(200, "회원정보", memberInfoDTO);
+    > ```
 
 ---
 
