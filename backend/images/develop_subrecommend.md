@@ -1,4 +1,16 @@
 # 구독추천 서비스 개발 
+
+## 아키텍처 설계 결과 
+
+- **Class 설계**    
+  ![class](./images/class_subrecommend.svg)   
+
+
+- **Sequence 설계**
+  ![sequence](./images/sequence.svg)    
+
+
+## 패키지 구조  
 구독추천 서비스를 개발해 봅시다.  
 먼저 구독추천 서비스의 패키지 구조도입니다.  
 클린 아키텍처에 맞춰서 subrecommend-biz와 subrecommend-infra 프로젝트로 나눠서   
