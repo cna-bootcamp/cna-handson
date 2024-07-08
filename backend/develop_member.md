@@ -106,20 +106,22 @@ com.subride
 
 
 ## 개발 순서
-| Group     | Task          | Description                   |
-| :-------- | :------------ | :---------------------------- |
-| 생성/설정 | 프로젝트 생성 | 새로운 프로젝트를 생성합니다. |
-|  | Lombok 설치 | 생성자, Getter, Setter 유틸리티 |
-|  | IntelliJ 환경 설정 | Import 라이브러리, 오타 검사 등 설정 |
-| 프로젝트 추가 | common 프로젝트 복사 | 공통모듈 클래스 복사 |
-|  | member 프로젝트 추가 | biz와 infra 프로젝트 추가 |
-| build.gradle | 최상위 프로젝트 | 최상위 프로젝트 manifest 작성 |
-|  | Member 프로젝트 | biz와 infra 프로젝트 manifest 작성 |
-|Biz 프로젝트 개발 | Usecase, Service, Domain | biz 프로젝트 복사 |
-|Infra 프로젝트 개발 | Controller 개발 | API 개발 |
-| | Gateway 개발 | Output Adapter 개발 |
-| Config클래스 개발 | Security Config | 웹 보안, 인증/인가 보안 설정 |
-|  | Swagger Config | API 문서화 설정 |
+| Group               | Task                        | Description                          |
+| :------------------ | :-------------------------- | :----------------------------------- |
+| 생성/설정           | 프로젝트 생성               | 새로운 프로젝트를 생성합니다.        |
+|                     | Lombok 설치                 | 생성자, Getter, Setter 유틸리티      |
+|                     | IntelliJ 환경 설정          | Import 라이브러리, 오타 검사 등 설정 |
+| 프로젝트 추가       | common 프로젝트 복사        | 공통모듈 클래스 복사                 |
+|                     | member 프로젝트 추가        | biz와 infra 프로젝트 추가            |
+| build.gradle        | 최상위 프로젝트             | 최상위 프로젝트 manifest 작성        |
+|                     | Member 프로젝트             | biz와 infra 프로젝트 manifest 작성   |
+| Biz 프로젝트 개발   | Usecase, Service, Domain    | biz 프로젝트 복사                    |
+| Infra 프로젝트 개발 | 애플리케이션 설정 파일 작성 | application.yml 작성                 |
+|                     | Main 프로그램 개발          | 최초 실행되는 Main class 개발        |
+|                     | Controller 개발             | API 개발                             |
+|                     | Gateway 개발                | Output Adapter 개발                  |
+| Config클래스 개발   | Security Config             | 웹 보안, 인증/인가 보안 설정         |
+|                     | Swagger Config              | API 문서화 설정                      |
 
 
 ## 프로젝트 생성
