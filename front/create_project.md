@@ -223,7 +223,7 @@ npx create-react-app subride-front
   - 'Git Bash' 터미널로 다시 오픈   
   ![alt text](./images/image-8.png)
   
-  > Tip: 기본 Shell을 Git Bash로 변경(Windows Only)  
+  > **기본 Shell을 Git Bash로 변경(Windows Only)**  
   > File-Preferences-Settings를 선택하고,  'default terminal'을 입력   
   > 오른쪽의 Terminal > Integrated > Default Profile: Windows 항목에서 'Git Bash'로 변경    
 
