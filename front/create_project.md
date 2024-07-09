@@ -221,7 +221,13 @@ npx create-react-app subride-front
   - vscode 에서 터미널 오픈    
   ![alt text](./images/image-7.png)   
   - 'Git Bash' 터미널로 다시 오픈   
-  ![alt text](./images/image-8.png)   
+  ![alt text](./images/image-8.png)
+  
+  > Tip: 기본 Shell을 Git Bash로 변경(Windows Only)  
+  > File-Preferences-Settings를 선택하고,  'default terminal'을 입력   
+  > 오른쪽의 Terminal > Integrated > Default Profile: Windows 항목에서 'Git Bash'로 변경    
+
+
   - 최초로 Git을 사용하는 경우 user.name, user.email 지정(**본인걸로 변경**)       
   ```
   git config --global user.name "온달"
