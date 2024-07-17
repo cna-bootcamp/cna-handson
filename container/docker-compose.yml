@@ -1,0 +1,316 @@
+
+services:
+  config:
+    build:
+      context: ./sc/config
+      dockerfile: ../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=config.jar
+    image: docker.io/hiondal/config:1.0.0
+    ports:
+      - "9001:9001"
+    environment:
+      SERVER_PORT: 9001
+      GIT_URL: https://github.com:443/cna-bootcamp/subride-config.git
+      GIT_USERNAME: hiondal
+      GIT_BRANCH: main
+      GIT_TOKEN: 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
+      ENCRYPT_KEY: CL4cboqlIweOqt93wjzZi/qjCxcSOYAMgzdKiy6cG2Y=
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9001/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - subride-net
+      
+  eureka1:  
+    build:
+      context: ./sc/eureka
+      dockerfile: ../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=eureka.jar
+    image: docker.io/hiondal/eureka:1.0.0
+    ports:
+      - "8761:8761"
+    environment:
+      HOSTNAME: eureka1
+      SERVER_PORT: 8761
+      REGISTER_WITH_EUREKA: true
+      FETCH_REGISTRY: false
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka2:8762/eureka/
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - subride-net
+  eureka2:  
+    depends_on:
+      eureka1:
+        condition: service_healthy  
+    image: docker.io/hiondal/eureka:1.0.0
+    ports:
+      - "8762:8762"
+    environment:
+      HOSTNAME: eureka2
+      SERVER_PORT: 8762
+      REGISTER_WITH_EUREKA: true
+      FETCH_REGISTRY: false
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka1:8761/eureka/
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8762/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - subride-net 
+  scg:
+    depends_on:
+      eureka1:
+        condition: service_healthy
+      eureka2:
+        condition: service_healthy
+    build:
+      context: ./sc/scg
+      dockerfile: ../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=scg.jar
+    image: docker.io/hiondal/scg:1.0.0
+    ports:
+      - "19080:19080"
+    environment:
+      HOSTNAME: scg
+      SERVER_PORT: 19080
+      JWT_SECRET: 8O2HQ13etL2BWZvYOiWsJ5uWFoLi6NBUG8divYVoCgtHVvlk3dqRksMl16toztDUeBTSIuOOPvHIrYq11G2BwQ==
+      EUREKA_SERVERS: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/
+      ALLOWED_ORIGINS: http://localhost:3000,http://subride-front:3000,http://cna.subride.com:3000,http://my.subride.com:3000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:19080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - subride-net    
+  
+  mysql:
+    image: mysql:8.0
+    container_name: my_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssw0rd$
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: P@ssw0rd$
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - subride-net    
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: my_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      - subride-net    
+      
+  member-service:
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      eureka1:
+        condition: service_healthy
+      eureka2:
+        condition: service_healthy
+      config:
+        condition: service_healthy
+    build:
+      context: ./subride/member/member-infra
+      dockerfile: ../../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=member.jar
+    image: docker.io/hiondal/member:1.0.0
+    ports:
+      - "18080:18080"
+    env_file:
+      - .env
+    environment:
+      HOSTNAME: member-service
+      SERVER_PORT: 18080
+      SPRING_APPLICATION_NAME: member-service
+      DB_URL: jdbc:mysql://mysql:3306/member?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    networks:
+      - subride-net
+
+  subrecommend-service:
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      eureka1:
+        condition: service_healthy
+      eureka2:
+        condition: service_healthy
+      config:
+        condition: service_healthy
+    build:
+      context: ./subride/subrecommend/subrecommend-infra
+      dockerfile: ../../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=subrecommend.jar
+    image: docker.io/hiondal/subrecommend:1.0.0
+    ports:
+      - "18081:18081"
+    env_file:
+      - .env
+    environment:
+      HOSTNAME: subrecommend-service
+      SERVER_PORT: 18081
+      SPRING_APPLICATION_NAME: subrecommend-service
+      DB_URL: jdbc:mysql://mysql:3306/subrecommend?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    networks:
+      - subride-net
+
+  mysub-service:
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      eureka1:
+        condition: service_healthy
+      eureka2:
+        condition: service_healthy
+      config:
+        condition: service_healthy
+    build:
+      context: ./subride/mysub/mysub-infra
+      dockerfile: ../../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=mysub.jar
+    image: docker.io/hiondal/mysub:1.0.0
+    ports:
+      - "18082:18082"
+    env_file:
+      - .env
+    environment:
+      HOSTNAME: mysub-service
+      SERVER_PORT: 18082
+      SPRING_APPLICATION_NAME: mysub-service
+      DB_URL: jdbc:mysql://mysql:3306/mysub?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    networks:
+      - subride-net    
+
+  mygrp-service:
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      eureka1:
+        condition: service_healthy
+      eureka2:
+        condition: service_healthy
+      config:
+        condition: service_healthy
+    build:
+      context: ./subride/mygrp/mygrp-infra
+      dockerfile: ../../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=mygrp.jar
+    image: docker.io/hiondal/mygrp:1.0.0
+    ports:
+      - "18083:18083"
+    env_file:
+      - .env
+    environment:
+      HOSTNAME: mygrp-service
+      SERVER_PORT: 18083
+      SPRING_APPLICATION_NAME: mygrp-service
+      DB_URL: jdbc:mysql://mysql:3306/mygrp?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    networks:
+      - subride-net
+
+  transfer-service:
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      eureka1:
+        condition: service_healthy
+      eureka2:
+        condition: service_healthy
+      config:
+        condition: service_healthy
+    build:
+      context: ./subride/transfer
+      dockerfile: ../../buildfile/Dockerfile_java
+      args:
+        - BUILD_LIB_DIR=build/libs
+        - ARTIFACTORY_FILE=transfer.jar
+    image: docker.io/hiondal/transfer:1.0.0
+    ports:
+      - "18084:18084"
+    env_file:
+      - .env
+    environment:
+      HOSTNAME: transfer-service
+      SERVER_PORT: 18084
+      SPRING_APPLICATION_NAME: transfer-service
+      DB_URL: jdbc:mysql://mysql:3306/transfer?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    networks:
+      - subride-net
+
+  subride-front:
+    build:
+      context: .
+      #주의:src디렉토리 밑에 server.js파일 있어야 함 
+      #dockerfile: buildfile/Dockerfile_react_nginx
+      dockerfile: buildfile/Dockerfile_react_express
+      args:
+        - PROJECT_FOLDER=subride-front
+        - BUILD_FOLDER=buildfile
+        - EXPORT_PORT=3000
+        - REACT_APP_API_BASE_URL=http://cna.subride.com:19080
+    image: docker.io/hiondal/subride-front:1.0.0
+    ports:
+      - "3000:3000"
+    environment:
+      #React에서 process.env로 환경변수를 읽으려면 반드시 'REACT_APP_'을 붙여야 함  
+      REACT_APP_API_BASE_URL: http://cna.subride.com:19080
+      
+    networks:
+      - subride-net
+      
+networks:
+  subride-net:
+    driver: bridge

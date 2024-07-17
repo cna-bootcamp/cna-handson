@@ -1,0 +1,41 @@
+# 베이스 이미지로 Node.js 14 버전을 사용합니다.
+FROM node:14
+
+# Arguments
+ARG PROJECT_FOLDER
+ARG BUILD_FOLDER
+ARG EXPORT_PORT
+
+# API G/W 호출 주소 환경변수 셋팅 
+ARG REACT_APP_API_BASE_URL
+ENV REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+
+# 작업 디렉토리를 /app으로 설정합니다.
+WORKDIR /app
+
+# package.json과 package-lock.json을 작업 디렉토리에 복사합니다.
+COPY ${PROJECT_FOLDER}/package*.json ./
+
+# 종속성을 설치합니다.
+RUN npm install --only=production
+
+# 소스 코드를 작업 디렉토리에 복사합니다.
+COPY ./${PROJECT_FOLDER} .
+
+# React 애플리케이션을 빌드합니다.
+RUN npm run build
+
+# Nginx를 설치합니다.
+RUN apt-get update && apt-get install -y nginx
+
+# Nginx 기본 설정 파일을 제거합니다.
+RUN rm -f /etc/nginx/conf.d/default.conf
+
+# Nginx 설정 파일을 복사합니다.
+COPY ${BUILD_FOLDER}/nginx.conf /etc/nginx/conf.d/default.conf
+
+# 포트 80을 노출합니다.
+EXPOSE ${EXPORT_PORT}
+
+# Nginx를 시작합니다.
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,38 @@
+# 베이스 이미지로 Node.js 14 버전을 사용합니다.
+FROM node:14
+
+# Arguments
+ARG PROJECT_FOLDER
+ARG BUILD_FOLDER
+ARG EXPORT_PORT
+
+# API G/W 호출 주소 환경변수 셋팅 
+ARG REACT_APP_API_BASE_URL
+ENV REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+
+# 작업 디렉토리를 /app으로 설정합니다.
+WORKDIR /app
+
+# package.json과 package-lock.json을 작업 디렉토리에 복사합니다.
+COPY ${PROJECT_FOLDER}/package*.json ./
+
+#copy server.js
+COPY ${BUILD_FOLDER}/server.js .
+
+# 종속성을 설치합니다.
+RUN npm install --only=production
+
+# 소스 코드를 작업 디렉토리에 복사합니다.
+COPY ./${PROJECT_FOLDER} .
+
+# React 애플리케이션을 빌드합니다.
+RUN npm run build
+
+# 서버 포트를 환경 변수로 설정합니다.
+ENV PORT=${EXPORT_PORT}
+
+# 포트를 노출합니다.
+EXPOSE $PORT
+
+# 서버 시작 스크립트를 실행합니다.
+CMD ["node", "server.js"]

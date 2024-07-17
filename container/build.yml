@@ -1,0 +1,41 @@
+services:
+  #jar파일 생성  
+  gradle-build-sc:
+    image: gradle:jdk22-alpine
+    volumes:
+      - ./sc:/home/gradle/sc
+    working_dir: /home/gradle/sc
+    command: >
+      /bin/sh -c '
+      for project in config eureka scg; do
+        if [ -d "$$project" ]; then
+          echo "##### Building $$project" &&
+          cd "$$project" &&
+          gradle build -x test &&
+          cd ..;
+        else
+          echo "Project $$project not found. Skipping.";
+        fi;
+      done'
+
+  gradle-build-subride:
+    image: gradle:jdk22-alpine
+    volumes:
+      - ./subride:/home/gradle/subride
+    working_dir: /home/gradle/subride
+    command: >
+      /bin/sh -c '
+      for project in member/member-infra subrecommend/subrecommend-infra mysub/mysub-infra mygrp/mygrp-infra; do
+        if [ -d "$$project" ]; then
+          echo "##### Building $$project" &&
+          cd "$$project" &&
+          gradle build -x test &&
+          cd ../..;
+        else
+          echo "Project $$project not found. Skipping.";
+        fi;
+      done &&
+      
+      cd transfer &&
+      echo "##### Building transfer" &&
+      gradle build -x test'

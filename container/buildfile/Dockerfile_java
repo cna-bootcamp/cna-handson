@@ -1,0 +1,26 @@
+FROM openjdk:23-oraclelinux8
+
+ARG ARTIFACTORY_FILE
+ARG BUILD_LIB_DIR
+ENV ARTIFACTORY_FILE ${ARTIFACTORY_FILE}
+ENV BUILD_LIB_DIR ${BUILD_LIB_DIR}
+ENV USERNAME k8s
+ENV ARTIFACTORY_HOME /home/${USERNAME}
+
+# DON'T change USERNAME
+# Add a docker user, make work dir
+RUN adduser -r -G root -d ${ARTIFACTORY_HOME} -s /bin/bash ${USERNAME} && \
+    echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    mkdir -p ${ARTIFACTORY_HOME} && \
+    chown ${USERNAME}:root ${ARTIFACTORY_HOME}
+
+WORKDIR ${ARTIFACTORY_HOME}
+
+# Copy your jar to the container
+COPY ${BUILD_LIB_DIR}/${ARTIFACTORY_FILE} ${ARTIFACTORY_HOME}
+
+# Launch the artifactory as docker user
+ENTRYPOINT [ "sh", "-c" ]
+USER ${USERNAME}
+#CMD [ "java --Dspring.profiles.active=${PROFILE} -jar ${ARTIFACTORY_FILE}" ]
+CMD [ "java -jar ${ARTIFACTORY_FILE}" ]
