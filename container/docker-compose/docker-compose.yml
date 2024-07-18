@@ -155,7 +155,7 @@ services:
         - ARTIFACTORY_FILE=member.jar
     image: docker.io/hiondal/member:1.0.0
     ports:
-      - "18080:18080"
+      - "18080"
     env_file:
       - .env
     environment:
@@ -186,7 +186,7 @@ services:
         - ARTIFACTORY_FILE=subrecommend.jar
     image: docker.io/hiondal/subrecommend:1.0.0
     ports:
-      - "18081:18081"
+      - "18081"
     env_file:
       - .env
     environment:
@@ -217,7 +217,7 @@ services:
         - ARTIFACTORY_FILE=mysub.jar
     image: docker.io/hiondal/mysub:1.0.0
     ports:
-      - "18082:18082"
+      - "18082"
     env_file:
       - .env
     environment:
@@ -248,7 +248,7 @@ services:
         - ARTIFACTORY_FILE=mygrp.jar
     image: docker.io/hiondal/mygrp:1.0.0
     ports:
-      - "18083:18083"
+      - "18083"
     env_file:
       - .env
     environment:
@@ -279,7 +279,7 @@ services:
         - ARTIFACTORY_FILE=transfer.jar
     image: docker.io/hiondal/transfer:1.0.0
     ports:
-      - "18084:18084"
+      - "18084"
     env_file:
       - .env
     environment:
@@ -300,13 +300,13 @@ services:
         - PROJECT_FOLDER=subride-front
         - BUILD_FOLDER=buildfile
         - EXPORT_PORT=3000
-        - REACT_APP_API_BASE_URL=http://cna.subride.com:19080
+        - REACT_APP_API_BASE_URL=http://my.subride.com:19080
     image: docker.io/hiondal/subride-front:1.0.0
     ports:
       - "3000:3000"
-    environment:
+    #environment:
       #React에서 process.env로 환경변수를 읽으려면 반드시 'REACT_APP_'을 붙여야 함  
-      REACT_APP_API_BASE_URL: http://cna.subride.com:19080
+      #REACT_APP_API_BASE_URL: http://cna.subride.com:19080
       
     networks:
       - subride-net
