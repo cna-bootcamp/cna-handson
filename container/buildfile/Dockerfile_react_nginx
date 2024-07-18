@@ -5,6 +5,7 @@ FROM node:14
 ARG PROJECT_FOLDER
 ARG BUILD_FOLDER
 ARG EXPORT_PORT
+ENV PORT ${EXPORT_PORT}
 
 # API G/W 호출 주소 환경변수 셋팅 
 ARG REACT_APP_API_BASE_URL
@@ -34,8 +35,8 @@ RUN rm -f /etc/nginx/conf.d/default.conf
 # Nginx 설정 파일을 복사합니다.
 COPY ${BUILD_FOLDER}/nginx.conf /etc/nginx/conf.d/default.conf
 
-# 포트 80을 노출합니다.
-EXPOSE ${EXPORT_PORT}
+# 포트를 노출합니다.
+EXPOSE ${PORT}
 
 # Nginx를 시작합니다.
 CMD ["nginx", "-g", "daemon off;"]
