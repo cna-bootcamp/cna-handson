@@ -1,5 +1,5 @@
-# build명령 예시: docker build -f ./buildfile/Dockerfile_python -t mergesrc --build-arg PROJECT_FOLDER=python --build-arg APPNAME=mergesrc.py .
-# run 명령 예시: docker run --name mergesrc -it --rm -v .:/app mergesrc
+# build명령 예시: docker build -f ./buildfile/Dockerfile_python -t mergesrc --build-arg PROJECT_FOLDER=buildfile --build-arg APPNAME=mergesrc.py .
+# run 명령 예시: docker run -it --rm -v .:/src mergesrc
 
 # 파이썬 3.9 이미지를 베이스로 사용
 FROM python:3.9
@@ -8,12 +8,14 @@ FROM python:3.9
 ARG PROJECT_FOLDER
 ARG APPNAME
 ENV APPNAME ${APPNAME}
+ENV APPDIR /python
 
 # 작업 디렉토리 설정
-WORKDIR /app
+WORKDIR /src
 
 # 파이썬 프로그램 파일 복사
-COPY ${PROJECT_FOLDER}/${APPNAME} ./python/${APPNAME}
+RUN mkdir -p ${APPDIR}
+COPY ${PROJECT_FOLDER}/${APPNAME} ${APPDIR}/${APPNAME}
 
 # 컨테이너 실행 시 파이썬 프로그램 실행
-CMD ["sh", "-c", "python ./python/${APPNAME}"]
+CMD ["sh", "-c", "python ${APPDIR}/${APPNAME}"]
