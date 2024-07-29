@@ -1,0 +1,22 @@
+sonarqubeUsername: admin
+sonarqubePassword: "P@ssw0rd$"
+
+service:
+  type: ClusterIP
+  ports:
+    http: 80
+    elastic: 9001
+  nodePorts:
+    http: ""
+    elastic: ""
+ingress:
+  enabled: true
+  ingressClassName: "nginx"
+  hostname: mysonar.io
+  
+persistence:
+  enabled: true
+  storageClass: "nfs-retain"
+  accessModes:
+    - ReadWriteOnce
+  size: 2Gi

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: rabbitmq
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  serviceName: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+      name: rabbitmq
+    spec:
+      containers:
+      - env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: guest
+        - name: RABBITMQ_DEFAULT_PASS
+          value: guest
+        image: rabbitmq:management
+        imagePullPolicy: IfNotPresent
+        name: rabbitmq
+        ports:
+        - containerPort: 5672
+          name: containerport
+          protocol: TCP
+        - containerPort: 15672
+          name: consoleport
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 1024m
+            memory: 1Gi
+          requests:
+            cpu: 128m
+            memory: 128Mi
+      serviceAccount: sa-ondal
+      serviceAccountName: sa-ondal
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  namespace: ondal
+spec:
+  ports:
+  - name: port1
+    port: 5672
+    targetPort: 5672
+  - name: port2
+    port: 15672
+    targetPort: 15672
+  selector:
+    app: rabbitmq
+  type: NodePort

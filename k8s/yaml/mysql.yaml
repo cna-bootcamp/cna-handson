@@ -1,0 +1,50 @@
+global:
+  storageClass: "nfs-retain"
+
+## @param architecture MySQL architecture (`standalone` or `replication`)
+architecture: replication
+##
+auth:
+  rootPassword: "P@ssw0rd$"
+  createDatabase: true
+  database: "mydb"
+  username: "u00"
+  password: "P@ssw0rd$"
+  ##
+  replicationUser: replicator
+  replicationPassword: "P@ssw0rd$"
+primary:
+  name: primary
+  ##
+  persistence:
+    enabled: true
+    storageClass: "nfs-retain"
+    size: 100m
+  ##
+  service:
+    type: NodePort
+    ports:
+      mysql: 3306
+    ##
+    nodePorts:
+      mysql: "32700"
+
+secondary:
+  name: secondary
+  ##
+  replicaCount: 1
+    ##
+  persistence:
+    enabled: true
+    storageClass: "nfs-retain"
+    ##
+    accessModes:
+      - ReadWriteOnce
+    ##
+    size: 100m
+  ##
+  service:
+    type: ClusterIP
+    ##
+    ports:
+      mysql: 3306
