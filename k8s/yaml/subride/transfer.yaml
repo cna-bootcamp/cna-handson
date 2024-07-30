@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transfer
+  namespace: ondal
+  labels:
+    app: transfer
+spec:
+  selector:
+    matchLabels:
+      app: transfer
+  replicas: 1
+  template:
+    metadata:
+      name: transfer
+      labels:
+        app: transfer
+    spec:
+      imagePullSecrets:
+        - name: dockerhub
+      containers:
+        - name: transfer
+          image: docker.io/hiondal/transfer:1.0.0
+          imagePullPolicy: Always
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: APPLICATION_NAME
+              value: transfer
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          envFrom:
+          - configMapRef:
+              name: subride
+          - configMapRef:
+              name: transfer
+          - secretRef:
+              name: subride
+          ports:
+            - name: container-port
+              containerPort: 18080
+          resources:
+            requests:
+              cpu: 256m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: transfer
+  namespace: ondal
+data:
+  SPRING_APPLICATION_NAME: transfer-service
+  SERVER_PORT: "18080"
+  DB_URL: jdbc:mysql://mysql-primary-headless:3306/transfer?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transfer
+  namespace: ondal
+spec:
+  type: ClusterIP
+  selector:
+    app: transfer
+  ports:
+    - name: transfer
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transfer-headless
+  namespace: ondal
+spec:
+  clusterIP: None
+  selector:
+    app: transfer
+  ports:
+    - name: transfer
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: transfer
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: transfer.43.200.12.214.nip.io
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: transfer
+                port: 
+                  number: 18080

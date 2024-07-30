@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scg
+  namespace: ondal
+  labels:
+    app: scg
+spec:
+  selector:
+    matchLabels:
+      app: scg
+  replicas: 1
+  template:
+    metadata:
+      name: scg
+      labels:
+        app: scg
+    spec:
+      imagePullSecrets:
+        - name: dockerhub
+      containers:
+        - name: scg
+          image: docker.io/hiondal/scg:2.0.0
+          imagePullPolicy: Always
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          envFrom:
+          - configMapRef:
+              name: scg
+          - secretRef:
+              name: scg
+          ports:
+            - name: container-port
+              containerPort: 18080
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: scg
+  namespace: ondal
+data:
+  SERVER_PORT: "18080"
+  EUREKA_SERVERS: http://eureka:18080/eureka/
+  ALLOWED_ORIGINS: http://subride-front.43.200.12.214.nip.io
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: scg
+  namespace: ondal
+type: Opaque
+stringData:
+  JWT_SECRET: 8O2HQ13etL2BWZvYOiWsJ5uWFoLi6NBUG8divYVoCgtHVvlk3dqRksMl16toztDUeBTSIuOOPvHIrYq11G2BwQ==
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scg
+  namespace: ondal
+spec:
+  type: ClusterIP
+  selector:
+    app: scg
+  ports:
+    - name: scg
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scg-headless
+  namespace: ondal
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    app: scg
+  ports:
+    - name: scg
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: scg
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: scg.43.200.12.214.nip.io
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: scg
+                port: 
+                  number: 18080
+                  

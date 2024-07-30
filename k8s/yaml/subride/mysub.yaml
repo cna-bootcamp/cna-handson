@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysub
+  namespace: ondal
+  labels:
+    app: mysub
+spec:
+  selector:
+    matchLabels:
+      app: mysub
+  replicas: 1
+  template:
+    metadata:
+      name: mysub
+      labels:
+        app: mysub
+    spec:
+      imagePullSecrets:
+        - name: dockerhub
+      containers:
+        - name: mysub
+          image: docker.io/hiondal/mysub:1.0.0
+          imagePullPolicy: Always
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: APPLICATION_NAME
+              value: mysub
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          envFrom:
+          - configMapRef:
+              name: subride
+          - configMapRef:
+              name: mysub
+          - secretRef:
+              name: subride
+          ports:
+            - name: container-port
+              containerPort: 18080
+          resources:
+            requests:
+              cpu: 256m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: mysub
+  namespace: ondal
+data:
+  SPRING_APPLICATION_NAME: mysub-service
+  SERVER_PORT: "18080"
+  DB_URL: jdbc:mysql://mysql-primary-headless:3306/mysub?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysub
+  namespace: ondal
+spec:
+  type: ClusterIP
+  selector:
+    app: mysub
+  ports:
+    - name: mysub
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysub-headless
+  namespace: ondal
+spec:
+  clusterIP: None
+  selector:
+    app: mysub
+  ports:
+    - name: mysub
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mysub
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: mysub.43.200.12.214.nip.io
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: mysub
+                port: 
+                  number: 18080

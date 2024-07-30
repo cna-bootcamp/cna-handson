@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka
+  namespace: ondal
+  labels:
+    app: eureka
+spec:
+  selector:
+    matchLabels:
+      app: eureka
+  replicas: 2
+  template:
+    metadata:
+      name: eureka
+      labels:
+        app: eureka
+    spec:
+      imagePullSecrets:
+        - name: dockerhub
+      containers:
+        - name: eureka
+          image: docker.io/hiondal/eureka:2.0.0
+          imagePullPolicy: Always
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: APPLICATION_NAME
+              value: eureka
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          envFrom:
+          - configMapRef:
+              name: eureka
+          - secretRef:
+              name: eureka
+          ports:
+            - name: container-port
+              containerPort: 18080
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: eureka
+  namespace: ondal
+data:
+  SERVER_PORT: "18080"
+  EUREKA_HOST: eureka
+  EUREKA_PORT: "18080"
+  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:18080/eureka/
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: eureka
+  namespace: ondal
+type: Opaque
+stringData:
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka
+  namespace: ondal
+spec:
+  type: ClusterIP
+  selector:
+    app: eureka
+  ports:
+    - name: eureka
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: eureka
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: eureka.43.200.12.214.nip.io
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: eureka
+                port: 
+                  number: 18080

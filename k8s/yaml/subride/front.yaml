@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subride-front
+  namespace: ondal
+  labels:
+    app: subride-front
+spec:
+  selector:
+    matchLabels:
+      app: subride-front
+  replicas: 1
+  template:
+    metadata:
+      name: subride-front
+      labels:
+        app: subride-front
+    spec:
+      imagePullSecrets:
+        - name: dockerhub
+      containers:
+        - name: subride-front
+          image: docker.io/hiondal/subride-front:2.0.0
+          imagePullPolicy: Always
+          envFrom:
+          - configMapRef:
+              name: subride-front
+          - secretRef:
+              name: subride-front
+          ports:
+            - name: container-port
+              containerPort: 3000
+          resources:
+            requests:
+              cpu: 256m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: subride-front
+  namespace: ondal
+data:
+  TOKEN_REQUEST_INTERVAL: "1800000"
+  IDLE_TIME: "600000"
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: subride-front
+  namespace: ondal
+type: Opaque
+stringData:
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: subride-front
+  namespace: ondal
+spec:
+  type: ClusterIP
+  selector:
+    app: subride-front
+  ports:
+    - name: subride-front
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: subride-front
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: subride-front.43.200.12.214.nip.io
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: subride-front
+                port: 
+                  number: 3000

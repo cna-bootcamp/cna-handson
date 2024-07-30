@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config
+  namespace: ondal
+  labels:
+    app: config
+spec:
+  selector:
+    matchLabels:
+      app: config
+  replicas: 1
+  template:
+    metadata:
+      name: config
+      labels:
+        app: config
+    spec:
+      imagePullSecrets:
+        - name: dockerhub
+      containers:
+        - name: config
+          image: docker.io/hiondal/config:2.0.0
+          imagePullPolicy: Always
+          envFrom:
+          - configMapRef:
+              name: config
+          - secretRef:
+              name: config
+          ports:
+            - name: container-port
+              containerPort: 18080
+          resources:
+            requests:
+              cpu: 256m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: config
+  namespace: ondal
+data:
+  SERVER_PORT: "18080"
+  GIT_URL: https://github.com:443/cna-bootcamp/subride-config.git
+  GIT_USERNAME: hiondal
+  GIT_BRANCH: main
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: config
+  namespace: ondal
+type: Opaque
+stringData:
+  GIT_TOKEN: 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
+  ENCRYPT_KEY: CL4cboqlIweOqt93wjzZi/qjCxcSOYAMgzdKiy6cG2Y=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config
+  namespace: ondal
+spec:
+  type: ClusterIP
+  selector:
+    app: config
+  ports:
+    - name: config
+      port: 18080
+      targetPort: 18080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: config
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: config.43.200.12.214.nip.io
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: config
+                port: 
+                  number: 18080
