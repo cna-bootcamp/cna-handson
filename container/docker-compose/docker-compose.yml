@@ -37,9 +37,9 @@ services:
       - "8761:8761"
     environment:
       HOSTNAME: eureka1
-      SERVER_PORT: 8761
-      REGISTER_WITH_EUREKA: true
-      FETCH_REGISTRY: false
+      SERVER_PORT: "8761"
+      REGISTER_WITH_EUREKA: "true"
+      FETCH_REGISTRY: "false"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka2:8762/eureka/
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
@@ -57,9 +57,9 @@ services:
       - "8762:8762"
     environment:
       HOSTNAME: eureka2
-      SERVER_PORT: 8762
-      REGISTER_WITH_EUREKA: true
-      FETCH_REGISTRY: false
+      SERVER_PORT: "8762"
+      REGISTER_WITH_EUREKA: "true"
+      FETCH_REGISTRY: "false"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka1:8761/eureka/
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8762/actuator/health"]
@@ -101,10 +101,10 @@ services:
     image: mysql:8.0
     container_name: my_mysql
     environment:
-      MYSQL_ROOT_PASSWORD: P@ssw0rd$
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: mydb
       MYSQL_USER: user
-      MYSQL_PASSWORD: P@ssw0rd$
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
