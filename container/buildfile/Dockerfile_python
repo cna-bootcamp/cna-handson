@@ -2,7 +2,7 @@
 # run 명령 예시: docker run -it --rm -v .:/src mergesrc
 
 # 파이썬 3.9 이미지를 베이스로 사용
-FROM python:3.9
+FROM --platform=linux/amd64 python:3.9
 
 # Arguments
 ARG PROJECT_FOLDER
