@@ -1,4 +1,4 @@
-FROM openjdk:23-oraclelinux8
+FROM --platform=linux/amd64 openjdk:23-oraclelinux8
 
 ARG ARTIFACTORY_FILE
 ARG BUILD_LIB_DIR
