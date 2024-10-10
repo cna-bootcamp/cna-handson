@@ -1,5 +1,5 @@
 # 베이스 이미지로 Node.js 14 버전을 사용합니다.
-FROM node:14
+FROM --platform=linux/amd64 node:14
 
 # Arguments
 ARG PROJECT_FOLDER
