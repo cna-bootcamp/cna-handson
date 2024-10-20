@@ -1,5 +1,10 @@
-# 베이스 이미지로 Node.js 14 버전을 사용합니다.
-FROM --platform=linux/amd64 node:14
+# 베이스 이미지로 Node.js 최신 버전을 사용합니다.
+FROM --platform=linux/amd64 node:latest
+# 보안 업데이트 적용: upgrade안하면 image 보안 취약성 검사 실패할 수 있음  
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Arguments
 ARG PROJECT_FOLDER
@@ -10,11 +15,16 @@ ARG EXPORT_PORT
 ARG REACT_APP_API_BASE_URL
 ENV REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
 
+# Non-root user로 실행하기 위해 user 생성  
+ENV USERNAME ubuntu
+ENV HOME_DIR /home/ubuntu
+RUN useradd -m -d ${HOME_DIR} -s /bin/bash -g users -G sudo ${USERNAME}
+
 # 작업 디렉토리를 /app으로 설정합니다.
-WORKDIR /app
+WORKDIR ${HOME_DIR}/app
 
 # package.json과 package-lock.json을 작업 디렉토리에 복사합니다.
-COPY ${PROJECT_FOLDER}/package*.json ./
+COPY ${PROJECT_FOLDER}/package*.json .
 
 #copy server.js
 COPY ${BUILD_FOLDER}/server.js .
@@ -23,7 +33,8 @@ COPY ${BUILD_FOLDER}/server.js .
 RUN npm install --only=production
 
 # 소스 코드를 작업 디렉토리에 복사합니다.
-COPY ./${PROJECT_FOLDER} .
+COPY ./${PROJECT_FOLDER}/src ./src
+COPY ./${PROJECT_FOLDER}/public ./public
 
 # React 애플리케이션을 빌드합니다.
 RUN npm run build
@@ -33,6 +44,9 @@ ENV PORT=${EXPORT_PORT}
 
 # 포트를 노출합니다.
 EXPOSE $PORT
+
+# 비 root 사용자로 실행
+USER ${USERNAME}
 
 # 서버 시작 스크립트를 실행합니다.
 CMD ["node", "server.js"]
