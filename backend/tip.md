@@ -36,9 +36,9 @@ IntelliJ에서는 잘 발생 안하지만 아주 가끔 로컬 캐싱에 문제�
 오른쪽에서 'Generate new token' 클릭하고 두번째 것 선택      
 ![alt text](./images/image-token-2.png)
 
-Note(토큰이름: 적절히 지정)를 입력하고 Expiration 기간을 지정한 후 'repo'를 체크함    
-![alt text](./images/image-token-3.png)
+Note(토큰이름: 적절히 지정)를 입력하고 Expiration 기간을 지정한 후 'repo'와 'workflow'를 체크함    
 
+![](./images/2025-02-25-17-16-04.png)  
 
 ## Git 인증정보 저장  
 Git에 푸시할 때 매번 ID와 인증토큰을 입력하는건 매우 불편합니다.  
